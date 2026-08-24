@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Petrified3D — Galeri &amp; Viewer Batu Kayu Fosil</title>
+<meta name="description" content="Lihat koleksi petrified wood stone dalam mode 3D dan immersive — putar, perbesar, jelajahi setiap urat dan lapisan.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/css/style.css">
+
+<!-- model-viewer: renders real .glb/.gltf 3D scans when available -->
+<script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar__inner">
+    <a href="#top" class="brand">
+      <span class="brand__ring" aria-hidden="true">
+        <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18"/><circle cx="20" cy="20" r="12.5"/><circle cx="20" cy="20" r="7"/></svg>
+      </span>
+      <span class="brand__text">Petrified<em>3D</em></span>
+    </a>
+    <nav class="topbar__nav">
+      <a href="#koleksi">Koleksi</a>
+      <a href="#tentang">Tentang</a>
+      <a href="#kontak" class="nav-cta">Hubungi Kami</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="hero__rings" aria-hidden="true">
+      <svg viewBox="0 0 600 600" class="ring-art">
+        <circle cx="300" cy="300" r="280"/>
+        <circle cx="300" cy="300" r="230"/>
+        <circle cx="300" cy="300" r="185"/>
+        <circle cx="300" cy="300" r="145"/>
+        <circle cx="300" cy="300" r="108"/>
+        <circle cx="300" cy="300" r="74"/>
+        <circle cx="300" cy="300" r="42"/>
+      </svg>
+    </div>
+    <div class="hero__content">
+      <p class="eyebrow">Setiap cincin menyimpan ribuan tahun</p>
+      <h1>Jelajahi tekstur batu kayu fosil<br> dari segala sisi.</h1>
+      <p class="hero__desc">Putar, perbesar, dan amati serat asli tiap potongan petrified wood — langsung dari layar Anda, sebelum menyentuhnya secara langsung.</p>
+      <div class="hero__actions">
+        <a href="#koleksi" class="btn btn--primary">Lihat Koleksi</a>
+        <a href="#tentang-viewer" class="btn btn--ghost">Cara kerja viewer 3D</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="koleksi" class="collection">
+    <div class="section-head">
+      <h2>Koleksi</h2>
+      <p>Lima kategori utama produk petrified wood. Ketuk sebuah potongan untuk membuka mode immersive.</p>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Kategori produk"></div>
+
+    <div class="grid" id="productGrid"></div>
+  </section>
+
+  <section id="tentang-viewer" class="about-viewer">
+    <div class="about-viewer__text">
+      <h2>Tentang mode viewer</h2>
+      <p>Setiap produk bisa ditampilkan dengan tiga level immersion, tergantung materi yang tersedia:</p>
+      <ul class="viewer-levels">
+        <li><span>Model 3D</span> — hasil pemindaian nyata (file <code>.glb</code>), bisa diputar bebas 360° dan dilihat dalam mode AR di HP.</li>
+        <li><span>Spin Foto</span> — rangkaian foto dari banyak sudut, digeser untuk efek putar 360°.</li>
+        <li><span>Foto Zoom</span> — satu foto resolusi tinggi dengan pinch-to-zoom untuk melihat detail urat batu.</li>
+      </ul>
+      <p class="note">Produk pada demo ini memakai placeholder bertanda <em>SAMPLE</em> — ganti dengan foto/model asli mengikuti panduan di <code>README.md</code>.</p>
+    </div>
+  </section>
+
+  <section id="tentang" class="about">
+    <h2>Tentang Kami</h2>
+    <p>Petrified3D adalah etalase digital untuk produk batu kayu fosil (petrified wood) — mulai dari meja dan panel dinding, hingga ornamen koleksi. Kami membangun galeri ini agar calon pembeli bisa menilai serat, warna, dan bentuk asli setiap potongan sebelum memesan.</p>
+  </section>
+
+  <section id="kontak" class="contact">
+    <h2>Hubungi Kami</h2>
+    <p>Tertarik dengan salah satu koleksi, atau ingin custom ukuran? Hubungi kami langsung.</p>
+    <a href="https://wa.me/6285123758721" class="btn btn--primary" target="_blank" rel="noopener">Chat via WhatsApp</a>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>© <span id="year"></span> Petrified3D. Dibangun untuk menampilkan keindahan batu kayu fosil.</p>
+</footer>
+
+<!-- Immersive viewer modal -->
+<div class="viewer-modal" id="viewerModal" aria-hidden="true">
+  <div class="viewer-modal__backdrop" data-close></div>
+  <div class="viewer-modal__panel" role="dialog" aria-modal="true" aria-labelledby="viewerTitle">
+    <button class="viewer-modal__close" data-close aria-label="Tutup">✕</button>
+
+    <div class="viewer-stage" id="viewerStage">
+      <!-- populated by js/viewer.js -->
+    </div>
+
+    <div class="viewer-mode-switch" id="viewerModeSwitch"></div>
+
+    <div class="viewer-info">
+      <p class="viewer-info__cat" id="viewerCat"></p>
+      <h3 id="viewerTitle"></h3>
+      <p id="viewerDesc"></p>
+      <div class="viewer-info__meta" id="viewerMeta"></div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/products.js"></script>
+<script src="/js/viewer.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>
