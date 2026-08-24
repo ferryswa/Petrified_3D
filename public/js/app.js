@@ -100,6 +100,21 @@ window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal()
 renderTabs();
 render();
 
+// ---- Floating WhatsApp button: hidden until user scrolls past the hero on mobile ----
+const floatWa = document.querySelector('.float-wa');
+if (floatWa) {
+  const toggleWa = () => {
+    if (window.innerWidth > 640 || window.scrollY > 420) {
+      floatWa.classList.add('is-visible');
+    } else {
+      floatWa.classList.remove('is-visible');
+    }
+  };
+  toggleWa();
+  window.addEventListener('scroll', toggleWa, { passive: true });
+  window.addEventListener('resize', toggleWa);
+}
+
 // ---- Hero featured product card ----
 const heroProduct = PRODUCTS.find(p => p.id === 'meja-01') || PRODUCTS[0];
 if (heroProduct) {
