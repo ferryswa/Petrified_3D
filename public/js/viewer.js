@@ -34,9 +34,9 @@ const Viewer = (() => {
     }
     return `
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sample placeholder texture">
-        <rect width="100" height="100" fill="#241d18"/>
+        <rect width="100" height="100" fill="#f0e9dc"/>
         ${circles}
-        <text x="50" y="97" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="3.6" fill="#ede3d0" opacity="0.55">SAMPLE — ganti dengan foto asli</text>
+        <text x="50" y="97" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="3.6" fill="#7d7263" opacity="0.75">SAMPLE — ganti dengan foto asli</text>
       </svg>`;
   }
 

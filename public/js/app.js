@@ -99,3 +99,11 @@ window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal()
 
 renderTabs();
 render();
+
+// ---- Hero featured product card ----
+const heroProduct = PRODUCTS.find(p => p.id === 'meja-01') || PRODUCTS[0];
+if (heroProduct) {
+  document.getElementById('heroProductName').textContent = heroProduct.name;
+  document.getElementById('heroProductThumb').innerHTML = cardMediaSVG(heroProduct);
+  document.getElementById('heroProductCard').addEventListener('click', () => openProduct(heroProduct));
+}

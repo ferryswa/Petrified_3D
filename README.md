@@ -3,6 +3,14 @@
 Web viewer 3D / immersive untuk produk **petrified wood stone** (batu kayu fosil).
 Node.js + Express menyajikan static site, siap deploy ke Render.com dari GitHub.
 
+**Tema:** light & clean, gaya etalase e-commerce (promo bar berjalan, breadcrumb, hero
+dengan kartu produk mengambang, tombol WhatsApp mengambang) — terinspirasi dari referensi
+yang diberikan, dibangun ulang dengan brand & ilustrasi orisinal milik Petrified3D (bukan
+menyalin logo/foto pihak lain). Hero memakai ilustrasi vektor ruang tamu buatan sendiri
+(bukan foto asli) dengan meja petrified wood bercincin sebagai elemen fokus — karena tidak
+ada foto lifestyle asli yang tersedia untuk dipakai. Ganti dengan foto ruangan/produk asli
+kapan pun sudah tersedia.
+
 Demo ini punya **5 kategori**:
 1. Meja & Furnitur
 2. Panel Dinding
@@ -59,7 +67,33 @@ seperti workflow RenovBSD/Bantuin yang biasa dipakai.)*
 
 ---
 
-## 4. Mengganti placeholder dengan foto/model asli
+## 4. Fitur baru: Convert Foto → 3D (di halaman utama, `#convert`)
+
+Ini fitur **konversi foto ke model 3D langsung di browser**, tanpa server, tanpa API
+eksternal, tanpa biaya tambahan — pakai Three.js (dimuat dari CDN saat halaman dibuka).
+
+**Cara kerja:** kecerahan tiap piksel foto diubah jadi nilai ketinggian ("depth from
+luminance"), lalu dipetakan ke mesh 3D dan diberi tekstur foto aslinya. Hasilnya adalah
+**relief 3D** dari sisi yang difoto — bisa diputar, di-zoom, dan diunduh sebagai `.glb`.
+
+**Yang perlu dipahami (biar ekspektasi tepat):**
+- Ini **bukan** photogrammetry/scan 3D penuh. Sisi belakang & samping objek tidak ikut
+  terbentuk, karena hanya ada 1 foto sebagai sumber.
+- Paling bagus untuk objek **pipih/flat**: panel dinding, penampang meja, potongan
+  aksesoris koleksi — di situ relief serat & cincin kayu terlihat jelas timbul.
+- Untuk objek 3 dimensi penuh (bongkahan, bola, meja berkaki), hasil relief akan terlihat
+  "gepeng" karena memang keterbatasan metode 1-foto. Untuk itu tetap pakai mode
+  **Spin 360°** (banyak foto sekeliling objek) atau scan 3D asli (lihat bagian 4 di
+  README ini soal `model`).
+- Slider **Kedalaman relief** mengatur seberapa menonjol permukaannya, **Kehalusan**
+  meredam noise foto biar tidak bergerigi, dan **Balik arah kedalaman** berguna kalau
+  bagian gelap foto seharusnya yang menonjol (bukan yang terang).
+- Hasil unduhan `.glb` bisa langsung dipakai sebagai nilai `model` di
+  `public/js/products.js` untuk produk pipih yang cocok.
+
+---
+
+## 5. Mengganti placeholder dengan foto/model asli
 
 Buka `public/js/products.js`. Tiap produk punya field:
 
