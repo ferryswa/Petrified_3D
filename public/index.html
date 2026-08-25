@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Petrified3D — Galeri &amp; Viewer Batu Kayu Fosil</title>
-<meta name="description" content="Lihat koleksi petrified wood stone dalam mode 3D dan immersive — putar, perbesar, jelajahi setiap urat dan lapisan.">
+<title>Petrified3D — 3D Catalogue of Petrified Wood Stone</title>
+<meta name="description" content="Browse petrified wood stone pieces in 3D, zoom, and AR — see exactly how each piece would look and feel in your home, from anywhere in the world.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,31 +12,21 @@
 
 <link rel="stylesheet" href="/css/style.css">
 
-<!-- model-viewer: renders real .glb/.gltf 3D scans when available -->
+<!-- model-viewer: renders real .glb/.gltf 3D scans and AR when available -->
 <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
-
-<!-- three.js: powers the client-side "Photo → 3D" relief converter -->
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
-  }
-}
-</script>
 </head>
 <body>
 
 <div class="promo">
   <div class="promo__track" aria-hidden="true">
-    <span>Pengiriman ke seluruh Indonesia</span>
-    <span>Setiap potongan bersertifikat asli</span>
-    <span>Konsultasi &amp; custom ukuran via WhatsApp</span>
-    <span>Lihat tiap produk dalam mode 3D sebelum memesan</span>
-    <span>Pengiriman ke seluruh Indonesia</span>
-    <span>Setiap potongan bersertifikat asli</span>
-    <span>Konsultasi &amp; custom ukuran via WhatsApp</span>
-    <span>Lihat tiap produk dalam mode 3D sebelum memesan</span>
+    <span>Worldwide shipping &amp; export</span>
+    <span>Every piece view-able in 3D &amp; AR before you buy</span>
+    <span>Custom sizing on request via WhatsApp</span>
+    <span>Direct from our Tulungagung workshop</span>
+    <span>Worldwide shipping &amp; export</span>
+    <span>Every piece view-able in 3D &amp; AR before you buy</span>
+    <span>Custom sizing on request via WhatsApp</span>
+    <span>Direct from our Tulungagung workshop</span>
   </div>
 </div>
 
@@ -46,92 +36,49 @@
       <span class="brand__mark" aria-hidden="true">
         <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="16"/><circle cx="20" cy="20" r="10.5"/><circle cx="20" cy="20" r="5"/></svg>
       </span>
-      <span class="brand__text">Petrified<em>3D</em><span class="brand__sub">Batu Kayu Fosil</span></span>
+      <span class="brand__text">Petrified<em>3D</em><span class="brand__sub">Fossilised Wood Stone</span></span>
     </a>
     <nav class="topbar__nav">
-      <a href="#koleksi">Koleksi</a>
-      <a href="#tentang-viewer">Cara Kerja Viewer</a>
-      <a href="#convert">Convert Foto → 3D</a>
-      <a href="#tentang">Tentang</a>
+      <a href="#collection">Collection</a>
+      <a href="#viewer-info">How Viewing Works</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#location">Location &amp; Order</a>
+      <a href="#about">About</a>
     </nav>
     <div class="topbar__actions">
-      <button class="icon-btn" aria-label="Cari produk">
+      <button class="icon-btn" aria-label="Search products">
         <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
       </button>
-      <a href="#kontak" class="nav-cta">Hubungi Kami</a>
+      <a href="#location" class="nav-cta">Get Catalogue</a>
     </div>
   </div>
 </header>
 
 <nav class="breadcrumb" aria-label="Breadcrumb">
-  <a href="#top">Beranda</a><span>›</span><strong>Koleksi</strong>
+  <a href="#top">Home</a><span>›</span><strong>Collection</strong>
 </nav>
 
 <main id="top">
 
   <section class="hero">
     <div class="hero__frame">
-      <div class="hero__illustration" aria-hidden="true">
-        <svg viewBox="0 0 1200 630" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
-          <!-- window light -->
-          <rect x="760" y="0" width="440" height="630" fill="#f4ecd9" opacity="0.55"/>
-          <g opacity="0.5" stroke="#c9863f" stroke-width="2">
-            <line x1="820" y1="0" x2="820" y2="630"/>
-            <line x1="960" y1="0" x2="960" y2="630"/>
-            <line x1="1100" y1="0" x2="1100" y2="630"/>
-          </g>
-          <!-- floor rug -->
-          <ellipse cx="560" cy="600" rx="640" ry="140" fill="#e6dac1"/>
-          <ellipse cx="560" cy="600" rx="520" ry="108" fill="#ded0b2"/>
-          <!-- plant -->
-          <g transform="translate(1030,120)">
-            <path d="M0 260 C -10 150 -60 90 -95 40 C -55 95 -30 150 -10 240 Z" fill="#8a9a7e"/>
-            <path d="M10 260 C 25 140 70 70 120 20 C 75 85 45 150 25 240 Z" fill="#7a8b6e"/>
-            <path d="M0 260 C 5 170 5 120 -5 60 C -12 130 -8 180 -6 240 Z" fill="#6f8064"/>
-            <rect x="-34" y="250" width="68" height="70" rx="8" fill="#4a3222"/>
-          </g>
-          <!-- curtain sheers -->
-          <path d="M780 0 C 800 220 760 420 800 630 L 780 630 C 750 420 780 220 760 0 Z" fill="#fffdf7" opacity="0.55"/>
-          <path d="M1180 0 C 1150 220 1195 420 1160 630 L 1200 630 L 1200 0 Z" fill="#fffdf7" opacity="0.5"/>
-          <!-- sofa -->
-          <g transform="translate(70,330)">
-            <rect x="0" y="70" width="560" height="150" rx="26" fill="#efe6d4"/>
-            <rect x="0" y="0" width="120" height="150" rx="24" fill="#e6dac1"/>
-            <rect x="40" y="40" width="480" height="70" rx="20" fill="#f4ecd9"/>
-            <rect x="0" y="190" width="560" height="30" rx="10" fill="#c9863f" opacity="0.35"/>
-            <!-- cushions -->
-            <rect x="150" y="55" width="86" height="80" rx="14" fill="#fbf7ee"/>
-            <rect x="255" y="60" width="80" height="74" rx="14" fill="#6b4a30"/>
-            <rect x="355" y="58" width="82" height="76" rx="14" fill="#f4ecd9"/>
-          </g>
-          <!-- petrified wood coffee table (signature focal element) -->
-          <g transform="translate(430,470)">
-            <ellipse cx="140" cy="86" rx="150" ry="20" fill="#00000012"/>
-            <rect x="20" y="60" width="30" height="46" rx="4" fill="#4a3222"/>
-            <rect x="230" y="60" width="30" height="46" rx="4" fill="#4a3222"/>
-            <ellipse cx="140" cy="60" rx="150" ry="46" fill="#e0a862"/>
-            <ellipse cx="140" cy="60" rx="150" ry="46" fill="none" stroke="#8a4020" stroke-width="2" opacity="0.5"/>
-            <circle cx="140" cy="60" r="118" fill="none" stroke="#93472a" stroke-width="2.4" opacity="0.75"/>
-            <circle cx="140" cy="60" r="92" fill="none" stroke="#c9863f" stroke-width="2.4" opacity="0.8"/>
-            <circle cx="140" cy="60" r="66" fill="none" stroke="#93472a" stroke-width="2" opacity="0.7"/>
-            <circle cx="140" cy="60" r="40" fill="none" stroke="#c9863f" stroke-width="2" opacity="0.75"/>
-            <circle cx="140" cy="60" r="16" fill="none" stroke="#7a3a22" stroke-width="2" opacity="0.7"/>
-          </g>
-        </svg>
+      <div class="hero__photo" aria-hidden="true">
+        <img src="/assets/photos/hero-living-room-placeholder.jpg" alt="Sample living room with furniture — placeholder image, to be replaced with a real room/product photo">
       </div>
+      <div class="hero__scrim" aria-hidden="true"></div>
 
-      <a href="#koleksi" class="hero__badge">Lihat Koleksi</a>
+      <a href="#collection" class="hero__badge">View Collection</a>
 
-      <a href="#convert" class="hero__ai-pill">
+      <a href="#viewer-info" class="hero__ai-pill">
         <span class="dot"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 5.4L19 10l-5.2 1.6L12 17l-1.8-5.4L5 10l5.2-1.6z"/></svg></span>
-        Coba Convert Foto → 3D
+        See it in 3D &amp; AR
       </a>
 
       <button class="hero__product-card" id="heroProductCard" type="button">
         <span class="hero__product-card__thumb" id="heroProductThumb"></span>
         <span class="hero__product-card__body">
-          <h4 id="heroProductName">Meja Slab Amber Ring</h4>
-          <p>Lihat dalam mode 3D →</p>
+          <h4 id="heroProductName">Amber Ring Slab Table</h4>
+          <p>View in 3D →</p>
         </span>
         <span class="hero__product-card__cta">
           <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
@@ -140,110 +87,100 @@
     </div>
 
     <div class="hero__caption">
-      <p class="eyebrow">Setiap cincin menyimpan ribuan tahun</p>
-      <h1>Jelajahi tekstur batu kayu fosil dari segala sisi</h1>
-      <p>Putar, perbesar, dan amati serat asli tiap potongan petrified wood — langsung dari layar, sebelum menyentuhnya secara langsung.</p>
+      <p class="eyebrow">Every ring holds a thousand years</p>
+      <h1>See exactly how each piece would feel in your home — before it ships anywhere in the world</h1>
+      <p>Rotate, zoom, and preview in AR — explore the real grain and form of every petrified wood piece, wherever you are.</p>
+      <p class="hero__photo-note">The living room photo above is a <em>placeholder</em> — will be replaced with a real room/product photo.</p>
     </div>
   </section>
 
-  <section id="koleksi" class="collection">
+  <section id="collection" class="collection">
     <div class="section-head">
-      <h2>Koleksi</h2>
-      <p>Lima kategori utama produk petrified wood. Ketuk sebuah potongan untuk membuka mode immersive.</p>
+      <h2>Collection</h2>
+      <p>Six main categories of petrified wood pieces. Tap a piece to open the immersive viewer.</p>
     </div>
 
-    <div class="tabs" role="tablist" aria-label="Kategori produk"></div>
+    <div class="tabs" role="tablist" aria-label="Product categories"></div>
 
     <div class="grid" id="productGrid"></div>
   </section>
 
-  <section id="tentang-viewer" class="about-viewer">
+  <section id="viewer-info" class="about-viewer">
     <div class="about-viewer__text">
-      <h2>Tentang mode viewer</h2>
-      <p>Setiap produk bisa ditampilkan dengan tiga level immersion, tergantung materi yang tersedia:</p>
+      <h2>How viewing works</h2>
+      <p>Petrified3D exists so buyers outside Indonesia can get a real sense of a piece — its scale, grain, and presence in a room — without being there in person. Every product can appear at up to three levels of immersion, depending on what material is available:</p>
       <ul class="viewer-levels">
-        <li><span>Model 3D</span> — hasil pemindaian nyata (file <code>.glb</code>), bisa diputar bebas 360° dan dilihat dalam mode AR di HP.</li>
-        <li><span>Spin Foto</span> — rangkaian foto dari banyak sudut, digeser untuk efek putar 360°.</li>
-        <li><span>Foto Zoom</span> — satu foto resolusi tinggi dengan pinch-to-zoom untuk melihat detail urat batu.</li>
+        <li><span>3D Model</span> — a real scan (<code>.glb</code> file), freely rotatable in 360° and viewable in AR mode right on your phone, placed in your own room.</li>
+        <li><span>360° Spin</span> — a sequence of photos taken around the piece, dragged to simulate a full rotation.</li>
+        <li><span>Photo Zoom</span> — a single high-resolution photo with pinch-to-zoom to inspect the stone grain up close.</li>
       </ul>
-      <p class="note">Produk pada demo ini memakai placeholder bertanda <em>SAMPLE</em> — ganti dengan foto/model asli mengikuti panduan di <code>README.md</code>.</p>
+      <p class="note">Some catalogue pieces — mostly small accent/decor items — are shown as a photo only, with no 3D or AR mode; they're included as styling pieces rather than the main showcase. Products on this demo use placeholders marked <em>SAMPLE</em> — swap in real photos/models following the guide in <code>README.md</code>.</p>
     </div>
   </section>
 
-  <section id="convert" class="convert">
+  <section id="portfolio" class="portfolio">
     <div class="section-head">
-      <h2>Convert Foto → 3D</h2>
-      <p>Upload satu foto produk (misalnya penampang meja atau panel), dan lihat langsung sebagai model 3D relief yang bisa diputar, di-zoom, lalu diunduh sebagai file <code>.glb</code>.</p>
+      <h2>Portfolio</h2>
+      <p>A look behind the pieces — from buyers visiting the workshop, to production, to export-ready container stuffing.</p>
     </div>
 
-    <div class="convert__layout">
-      <div class="convert__viewport">
-        <div class="convert__drop" id="p3dDropZone">
-          <input type="file" id="p3dFile" accept="image/*" hidden>
-          <div class="convert__empty" id="p3dEmpty">
-            <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 16l4.5-6 3 4 2.5-3L20 16"/><rect x="3" y="4" width="18" height="16" rx="2"/></svg>
-            <p>Seret foto ke sini, atau ketuk untuk pilih file</p>
-          </div>
-        </div>
-        <div class="convert__canvas-wrap" id="p3dCanvasWrap"></div>
-        <p class="convert__status" id="p3dStatus"></p>
-      </div>
+    <div class="tabs" id="portfolioTabs" role="tablist" aria-label="Portfolio categories"></div>
 
-      <div class="convert__controls">
-        <label class="ctrl">
-          <span>Kedalaman relief</span>
-          <input type="range" id="p3dDepth" min="5" max="100" value="35">
-        </label>
-        <label class="ctrl">
-          <span>Kehalusan permukaan</span>
-          <input type="range" id="p3dSmooth" min="0" max="6" value="2">
-        </label>
-        <label class="ctrl ctrl--checkbox">
-          <input type="checkbox" id="p3dInvert">
-          <span>Balik arah kedalaman</span>
-        </label>
-        <button class="btn btn--ghost" id="p3dRegenerate">Bangun ulang model</button>
-        <button class="btn btn--primary" id="p3dDownload" disabled>Unduh .glb</button>
+    <div class="grid grid--portfolio" id="portfolioGrid"></div>
+  </section>
 
-        <p class="convert__note">
-          Cara kerja: kecerahan tiap piksel foto diubah jadi ketinggian permukaan (depth-from-luminance),
-          lalu dijadikan mesh 3D bertekstur foto asli — semua diproses langsung di browser, tanpa upload ke server.
-          Ini menghasilkan relief permukaan yang menghadap kamera, <strong>bukan</strong> model 360° penuh
-          (sisi belakang/samping objek tidak ikut terbentuk). Paling cocok untuk potongan pipih seperti
-          panel, penampang meja, atau koleksi kecil. Untuk model yang bisa dilihat dari segala sisi,
-          gunakan mode <em>Spin 360°</em> (banyak foto) atau scan 3D asli.
+  <section id="location" class="location">
+    <div class="section-head">
+      <h2>Location, Catalogue &amp; Order</h2>
+      <p>Our workshop and warehouse is based in Tulungagung, East Java, Indonesia — pieces ship worldwide.</p>
+    </div>
+
+    <div class="location__layout">
+      <div class="location__card">
+        <h3>Warehouse &amp; Workshop</h3>
+        <p class="location__address">
+          WV4M+MJ Tulungagung<br>
+          Kabupaten Tulungagung, Jawa Timur<br>
+          Tulungagung 66271, Indonesia
         </p>
+        <a href="https://www.google.com/maps/search/?api=1&query=WV4M%2BMJ+Tulungagung" target="_blank" rel="noopener" class="btn btn--ghost">Get Directions</a>
+      </div>
+
+      <div class="location__card">
+        <h3>Request the Full Catalogue</h3>
+        <p>Get our complete price list and specs sheet sent directly to you on WhatsApp.</p>
+        <a href="https://wa.me/62811725511?text=Hi%2C%20I%27d%20like%20to%20request%20the%20Petrified3D%20catalogue." target="_blank" rel="noopener" class="btn btn--primary">Request Catalogue</a>
+      </div>
+
+      <div class="location__card">
+        <h3>Place an Order</h3>
+        <p>Ready to order, or need a custom size or quantity quote? Talk to us directly.</p>
+        <a href="https://wa.me/62811725511?text=Hi%2C%20I%27d%20like%20to%20order%20a%20petrified%20wood%20piece." target="_blank" rel="noopener" class="btn btn--primary">Order via WhatsApp</a>
       </div>
     </div>
   </section>
 
-  <section id="tentang" class="about">
-    <h2>Tentang Kami</h2>
-    <p>Petrified3D adalah etalase digital untuk produk batu kayu fosil (petrified wood) — mulai dari meja dan panel dinding, hingga ornamen koleksi. Kami membangun galeri ini agar calon pembeli bisa menilai serat, warna, dan bentuk asli setiap potongan sebelum memesan.</p>
-  </section>
-
-  <section id="kontak" class="contact">
-    <h2>Hubungi Kami</h2>
-    <p>Tertarik dengan salah satu koleksi, atau ingin custom ukuran? Hubungi kami langsung.</p>
-    <a href="https://wa.me/6285123758721" class="btn btn--primary" target="_blank" rel="noopener">Chat via WhatsApp</a>
+  <section id="about" class="about">
+    <h2>About Us</h2>
+    <p>Petrified3D is a digital showcase for petrified wood stone pieces — from tables and wall panels to sinks, bathtubs, and collector ornaments — produced at our workshop in Tulungagung, East Java. We built this 3D/AR gallery so buyers anywhere in the world can judge the grain, colour, and true form of a piece, and picture it in their own home, before placing an order.</p>
   </section>
 
 </main>
 
 <footer class="footer">
-  <p>© <span id="year"></span> Petrified3D. Dibangun untuk menampilkan keindahan batu kayu fosil.</p>
+  <p>© <span id="year"></span> Petrified3D. Built to showcase the beauty of petrified wood, worldwide.</p>
 </footer>
 
-<a href="https://wa.me/6285123758721" class="float-wa" target="_blank" rel="noopener">
+<a href="https://wa.me/62811725511" class="float-wa" target="_blank" rel="noopener">
   <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.6-.8-1.9-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.2.2-.3.2-.5.1-.3-.1-1.2-.4-2.2-1.4-.8-.7-1.4-1.6-1.5-1.9-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.2-.4.1-.2 0-.3 0-.5-.1-.1-.6-1.4-.8-2-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.3 0 1.4 1 2.7 1.1 2.9.1.2 2 3 4.8 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.6-.7 1.9-1.3.2-.6.2-1.2.2-1.3-.1-.2-.3-.2-.6-.4z"/><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2z"/></svg>
-  <span>Chat WhatsApp</span>
+  <span>Chat on WhatsApp</span>
 </a>
 
 <!-- Immersive viewer modal -->
 <div class="viewer-modal" id="viewerModal" aria-hidden="true">
   <div class="viewer-modal__backdrop" data-close></div>
   <div class="viewer-modal__panel" role="dialog" aria-modal="true" aria-labelledby="viewerTitle">
-    <button class="viewer-modal__close" data-close aria-label="Tutup">✕</button>
+    <button class="viewer-modal__close" data-close aria-label="Close">✕</button>
 
     <div class="viewer-stage" id="viewerStage">
       <!-- populated by js/viewer.js -->
@@ -263,6 +200,5 @@
 <script src="/js/products.js"></script>
 <script src="/js/viewer.js"></script>
 <script src="/js/app.js"></script>
-<script type="module" src="/js/photo-to-3d.js"></script>
 </body>
 </html>

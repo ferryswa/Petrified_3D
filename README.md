@@ -3,32 +3,41 @@
 Web viewer 3D / immersive untuk produk **petrified wood stone** (batu kayu fosil).
 Node.js + Express menyajikan static site, siap deploy ke Render.com dari GitHub.
 
+**Bahasa web:** seluruh isi website (bukan dokumen README ini) sekarang dalam
+**Bahasa Inggris**, karena target audiencenya kebanyakan buyer luar negeri. README ini
+tetap Bahasa Indonesia karena dokumentasi teknis untuk kamu.
+
+**Tujuan website:** jadi katalog digital yang memungkinkan buyer di luar negeri "merasakan"
+sebuah potongan petrified wood — skala, urat, dan bentuknya — dalam mode 3D, Zoom, dan AR,
+seolah barangnya sudah ada di rumah mereka, sebelum mereka pesan.
+
 **Tema:** light & clean, gaya etalase e-commerce (promo bar berjalan, breadcrumb, hero
-dengan kartu produk mengambang, tombol WhatsApp mengambang) — terinspirasi dari referensi
-yang diberikan, dibangun ulang dengan brand & ilustrasi orisinal milik Petrified3D (bukan
-menyalin logo/foto pihak lain). Hero memakai ilustrasi vektor ruang tamu buatan sendiri
-(bukan foto asli) dengan meja petrified wood bercincin sebagai elemen fokus — karena tidak
-ada foto lifestyle asli yang tersedia untuk dipakai. Ganti dengan foto ruangan/produk asli
-kapan pun sudah tersedia.
+dengan kartu produk mengambang, tombol WhatsApp mengambang). Hero memakai foto ruang tamu
+(`public/assets/photos/hero-living-room-placeholder.jpg`) sebagai **placeholder** — ganti
+dengan foto ruangan/produk asli begitu tersedia (tinggal timpa file yang sama, atau ubah
+path `src` di `<img>` dalam `index.html` bagian `.hero__photo`).
 
-Demo ini punya **5 kategori**:
-1. Meja & Furnitur
-2. Panel Dinding
-3. Ornamen & Dekorasi
-4. Bongkahan Alami
-5. Aksesoris & Koleksi
+**Nomor WhatsApp** dipakai konsisten di semua tombol (float button, section Location &
+Order, dsb): **0811725511** → format internasional `62811725511`.
 
-Setiap produk saat ini pakai **placeholder "cincin tahun"** (SVG bertanda `SAMPLE`) karena
-belum ada foto/model asli yang bisa diambil otomatis dari Instagram/Facebook/Linktree
-(platform tersebut butuh login, jadi tidak bisa di-scrape). Struktur kode sudah siap —
-tinggal ganti path file di `public/js/products.js`.
+Demo ini punya **6 kategori**:
+1. Tables & Furniture
+2. Wall Panels
+3. Sinks & Bathtubs
+4. Ornaments & Decor
+5. Raw Blocks
+6. Accessories & Collectibles
 
-**3 produk** (Meja Slab Amber Ring, Bola Batu Fosil, Bongkahan Raw XL) sudah dipasangi
+Beberapa item ditandai `accent:true` di `products.js` — ini item pemanis/aksen kecil yang
+sengaja **hanya tampil sebagai foto** (tanpa mode 3D/AR), karena bukan produk utama untuk
+di-showcase penuh. Item lain yang belum punya foto asli pakai **placeholder "cincin tahun"**
+(SVG bertanda `SAMPLE`).
+
+**3 produk** (Amber Ring Slab Table, Fossil Stone Sphere, XL Raw Block) sudah dipasangi
 **contoh model 3D** (`.glb`) di `public/assets/models/` supaya mode "3D Model" bisa langsung
 dicoba — putar bebas + zoom + AR di HP. Model-model ini **dibuat secara prosedural**
-(bentuk generik: orb, slab, boulder + tekstur cincin kayu), **bukan hasil scan produk asli**,
-karena tidak ada file scan 3D nyata yang tersedia dari sumber yang dibagikan. Ganti dengan
-file `.glb` hasil scan asli begitu tersedia (lihat bagian 4 di bawah).
+(bentuk generik: orb, slab, boulder + tekstur cincin kayu), **bukan hasil scan produk asli**.
+Ganti dengan file `.glb` hasil scan asli begitu tersedia (lihat bagian 4 di bawah).
 
 ---
 
@@ -50,8 +59,7 @@ Buka `http://localhost:3000`.
    (pertahankan struktur folder: `public/css`, `public/js`, `public/assets`, dll).
 3. Commit ke branch `main`.
 
-*(Kalau nanti mau edit file kecil, buka file di GitHub lalu klik ikon pensil — sama
-seperti workflow RenovBSD/Bantuin yang biasa dipakai.)*
+*(Kalau nanti mau edit file kecil, buka file di GitHub lalu klik ikon pensil.)*
 
 ---
 
@@ -67,42 +75,17 @@ seperti workflow RenovBSD/Bantuin yang biasa dipakai.)*
 
 ---
 
-## 4. Fitur baru: Convert Foto → 3D (di halaman utama, `#convert`)
-
-Ini fitur **konversi foto ke model 3D langsung di browser**, tanpa server, tanpa API
-eksternal, tanpa biaya tambahan — pakai Three.js (dimuat dari CDN saat halaman dibuka).
-
-**Cara kerja:** kecerahan tiap piksel foto diubah jadi nilai ketinggian ("depth from
-luminance"), lalu dipetakan ke mesh 3D dan diberi tekstur foto aslinya. Hasilnya adalah
-**relief 3D** dari sisi yang difoto — bisa diputar, di-zoom, dan diunduh sebagai `.glb`.
-
-**Yang perlu dipahami (biar ekspektasi tepat):**
-- Ini **bukan** photogrammetry/scan 3D penuh. Sisi belakang & samping objek tidak ikut
-  terbentuk, karena hanya ada 1 foto sebagai sumber.
-- Paling bagus untuk objek **pipih/flat**: panel dinding, penampang meja, potongan
-  aksesoris koleksi — di situ relief serat & cincin kayu terlihat jelas timbul.
-- Untuk objek 3 dimensi penuh (bongkahan, bola, meja berkaki), hasil relief akan terlihat
-  "gepeng" karena memang keterbatasan metode 1-foto. Untuk itu tetap pakai mode
-  **Spin 360°** (banyak foto sekeliling objek) atau scan 3D asli (lihat bagian 4 di
-  README ini soal `model`).
-- Slider **Kedalaman relief** mengatur seberapa menonjol permukaannya, **Kehalusan**
-  meredam noise foto biar tidak bergerigi, dan **Balik arah kedalaman** berguna kalau
-  bagian gelap foto seharusnya yang menonjol (bukan yang terang).
-- Hasil unduhan `.glb` bisa langsung dipakai sebagai nilai `model` di
-  `public/js/products.js` untuk produk pipih yang cocok.
-
----
-
-## 5. Mengganti placeholder dengan foto/model asli
+## 4. Mengganti placeholder dengan foto/model asli
 
 Buka `public/js/products.js`. Tiap produk punya field:
 
 ```js
 {
-  id:'meja-01', category:'meja', name:'Meja Slab Amber Ring', ...
-  photo: null,   // <- isi: '/assets/photos/meja-01.jpg'
-  spin:  null,   // <- isi: array 12–36 foto keliling objek (opsional)
-  model: null,   // <- isi: '/assets/models/meja-01.glb' (opsional, scan 3D asli)
+  id:'furn-01', category:'furniture', name:'Amber Ring Slab Table', ...
+  photo: null,     // <- isi: '/assets/photos/furn-01.jpg'
+  spin:  null,     // <- isi: array 12–36 foto keliling objek (opsional)
+  model: null,     // <- isi: '/assets/models/furn-01.glb' (opsional, scan 3D asli)
+  accent: false,   // <- true untuk item pemanis kecil yang cukup foto saja (skip 3D/AR)
 }
 ```
 
@@ -110,24 +93,53 @@ Buka `public/js/products.js`. Tiap produk punya field:
   taruh di `public/assets/photos/`.
 - **`spin`** (opsional) — 12–36 foto objek difoto berputar 360° di atas turntable/meja
   putar dengan pencahayaan konsisten. Urutkan file `nama-01.jpg` s/d `nama-24.jpg`.
-  Ini yang bikin efek "putar produk" tanpa perlu scan 3D sungguhan.
-- **`model`** (opsional, paling immersive) — file `.glb` hasil 3D scan (misal dari
-  aplikasi scan HP seperti Polycam/Scaniverse, atau photogrammetry dari foto `spin`
-  di atas). Taruh di `public/assets/models/`. Viewer otomatis mengaktifkan mode
-  "3D Model" dengan kontrol putar bebas + AR di HP begitu file ini ada.
+- **`model`** (opsional, paling immersive) — file `.glb` hasil 3D scan (misal dari aplikasi
+  scan HP seperti Polycam/Scaniverse). Taruh di `public/assets/models/`. Viewer otomatis
+  mengaktifkan mode "3D Model" dengan kontrol putar bebas + AR di HP begitu file ini ada.
+- **`accent`** — set `true` untuk item kecil yang memang cuma perlu tampil sebagai foto
+  (aksesoris pemanis, bukan barang utama). Viewer otomatis menyembunyikan tombol pilihan
+  mode (karena cuma ada 1 mode: foto) supaya tampilannya lebih rapi.
 
-Kalau `spin` atau `model` kosong (`null`), tombol mode terkait otomatis nonaktif —
-tidak perlu ubah kode lain.
+Kalau `spin` atau `model` kosong (`null`), tombol mode terkait otomatis nonaktif — tidak
+perlu ubah kode lain.
 
 ### Sumber foto asli
-Karena Instagram (`@petrified_wood_art_craft`), Facebook, dan katalog Google Drive
-butuh login untuk diakses otomatis, cara tercepat ambil foto asli:
-- Download langsung dari HP/galeri Ferry, atau
+Karena Instagram, Facebook, dan katalog Google Drive butuh login untuk diakses otomatis,
+cara tercepat ambil foto asli:
+- Download langsung dari HP/galeri, atau
 - Screenshot/save dari WhatsApp Business katalog, atau
-- Export dari Google Drive catalogue PDF (`Petrified Wood Art Craft_Catalogue IDR_April2026.pdf`)
-  lalu crop tiap foto produk jadi file `.jpg` terpisah.
+- Export dari file katalog PDF yang sudah ada lalu crop tiap foto produk jadi file `.jpg` terpisah.
 
 Upload hasilnya ke `public/assets/photos/` lalu update `products.js`.
+
+---
+
+## 5. Section Portfolio (Buyer Visit / Production / Stuffing & Export)
+
+Section baru `#portfolio` menampilkan 3 tab: **Buyer Visit**, **Production**, **Stuffing &
+Export** — masing-masing berisi grid foto placeholder (SVG cincin + caption). Data ada di
+`public/js/app.js`, cari objek `PORTFOLIO`:
+
+```js
+const PORTFOLIO = {
+  visit:      { label: 'Buyer Visit', items: [{ caption: '...', seed: 20 }, ...] },
+  production: { label: 'Production', items: [...] },
+  stuffing:   { label: 'Stuffing & Export', items: [...] },
+};
+```
+
+Ganti tiap item jadi foto asli dengan menambahkan field `photo: '/assets/photos/xxx.jpg'`
+lalu sesuaikan render di `renderPortfolio()` (`app.js`) untuk pakai `<img>` kalau field
+`photo` terisi — sama seperti pola yang dipakai di grid produk.
+
+---
+
+## 6. Section Location, Catalogue & Order
+
+Section `#location` menampilkan alamat warehouse (Tulungagung, Jawa Timur, plus-code
+`WV4M+MJ`) dengan tombol **Get Directions** (Google Maps), **Request Catalogue**, dan
+**Order via WhatsApp** — keduanya memakai nomor `62811725511` dengan pesan pre-filled
+berbeda. Edit teks pesan atau alamat langsung di `index.html` bagian `<section id="location">`.
 
 ---
 
@@ -141,9 +153,9 @@ petrified3d/
 │   ├── index.html
 │   ├── css/style.css
 │   ├── js/
-│   │   ├── products.js    # data 5 kategori + produk (edit di sini)
-│   │   ├── viewer.js       # engine viewer (3D model / spin 360 / zoom foto)
-│   │   └── app.js          # render grid, tab kategori, buka modal
+│   │   ├── products.js    # data 6 kategori + produk (edit di sini)
+│   │   ├── viewer.js       # engine viewer (3D model / spin 360 / photo zoom)
+│   │   └── app.js          # render grid, tabs, portfolio, buka modal
 │   └── assets/
 │       ├── photos/         # taruh foto asli di sini
 │       └── models/         # 3 contoh .glb generik ada di sini (ganti dgn scan asli)

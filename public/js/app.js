@@ -12,14 +12,14 @@ function cardMediaSVG(product) {
 
 function viewerTagFor(product) {
   if (product.model) return '3D MODEL';
-  if (product.spin && product.spin.length > 2) return 'SPIN 360°';
-  return 'FOTO ZOOM';
+  if (product.spin && product.spin.length > 2) return '360° SPIN';
+  return product.accent ? 'PHOTO' : 'PHOTO ZOOM';
 }
 
 function renderTabs() {
   const all = document.createElement('button');
   all.className = 'tab';
-  all.textContent = 'Semua';
+  all.textContent = 'All';
   all.dataset.cat = 'all';
   all.setAttribute('role', 'tab');
   all.setAttribute('aria-selected', activeCategory === 'all');
@@ -116,9 +116,79 @@ if (floatWa) {
 }
 
 // ---- Hero featured product card ----
-const heroProduct = PRODUCTS.find(p => p.id === 'meja-01') || PRODUCTS[0];
+const heroProduct = PRODUCTS.find(p => p.id === 'furn-01') || PRODUCTS[0];
 if (heroProduct) {
   document.getElementById('heroProductName').textContent = heroProduct.name;
   document.getElementById('heroProductThumb').innerHTML = cardMediaSVG(heroProduct);
   document.getElementById('heroProductCard').addEventListener('click', () => openProduct(heroProduct));
+}
+
+// ---- Portfolio: Buyer Visit / Production / Stuffing & Export ----
+const PORTFOLIO = {
+  visit: {
+    label: 'Buyer Visit',
+    items: [
+      { caption: 'Buyer inspecting raw blocks on-site', seed: 20 },
+      { caption: 'Walking the yard with an international buyer', seed: 21 },
+      { caption: 'Discussing custom sizing in person', seed: 22 },
+    ],
+  },
+  production: {
+    label: 'Production',
+    items: [
+      { caption: 'Cutting and shaping a raw block', seed: 23 },
+      { caption: 'Hand-polishing the surface', seed: 24 },
+      { caption: 'Quality check before finishing', seed: 25 },
+    ],
+  },
+  stuffing: {
+    label: 'Stuffing & Export',
+    items: [
+      { caption: 'Crating a piece for container shipment', seed: 26 },
+      { caption: 'Container stuffing at the warehouse', seed: 27 },
+      { caption: 'Loaded and ready for export', seed: 28 },
+    ],
+  },
+};
+
+const portfolioTabsEl = document.getElementById('portfolioTabs');
+const portfolioGridEl = document.getElementById('portfolioGrid');
+let activePortfolio = 'visit';
+
+function renderPortfolioTabs() {
+  portfolioTabsEl.innerHTML = '';
+  Object.entries(PORTFOLIO).forEach(([key, group]) => {
+    const btn = document.createElement('button');
+    btn.className = 'tab';
+    btn.textContent = group.label;
+    btn.dataset.key = key;
+    btn.setAttribute('role', 'tab');
+    btn.setAttribute('aria-selected', String(activePortfolio === key));
+    btn.addEventListener('click', () => { activePortfolio = key; renderPortfolio(); });
+    portfolioTabsEl.appendChild(btn);
+  });
+}
+
+function renderPortfolio() {
+  [...portfolioTabsEl.children].forEach(btn => {
+    btn.setAttribute('aria-selected', String(btn.dataset.key === activePortfolio));
+  });
+  portfolioGridEl.innerHTML = '';
+  PORTFOLIO[activePortfolio].items.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'portfolio-card';
+    card.innerHTML = `
+      <div class="portfolio-card__media">
+        ${Viewer.placeholderSVG(item.seed)}
+        <span class="card__badge">SAMPLE</span>
+      </div>
+      <p>${item.caption}</p>
+    `;
+    portfolioGridEl.appendChild(card);
+  });
+}
+
+if (portfolioTabsEl && portfolioGridEl) {
+  renderPortfolioTabs();
+  renderPortfolio();
 }

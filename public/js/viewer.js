@@ -36,7 +36,7 @@ const Viewer = (() => {
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sample placeholder texture">
         <rect width="100" height="100" fill="#f0e9dc"/>
         ${circles}
-        <text x="50" y="97" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="3.6" fill="#7d7263" opacity="0.75">SAMPLE — ganti dengan foto asli</text>
+        <text x="50" y="97" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="3.6" fill="#7d7263" opacity="0.75">SAMPLE — replace with real photo</text>
       </svg>`;
   }
 
@@ -48,10 +48,17 @@ const Viewer = (() => {
   function buildModeButtons(product) {
     const modes = [
       { key: 'model', label: '3D Model', available: !!product.model },
-      { key: 'spin', label: 'Spin 360°', available: !!(product.spin && product.spin.length > 2) },
-      { key: 'photo', label: 'Foto Zoom', available: true },
+      { key: 'spin', label: '360° Spin', available: !!(product.spin && product.spin.length > 2) },
+      { key: 'photo', label: 'Photo Zoom', available: true },
     ];
+    const available = modes.filter(m => m.available);
     modeSwitch.innerHTML = '';
+    // Photo-only accent pieces don't need a switcher at all — just one mode.
+    if (available.length <= 1) {
+      modeSwitch.style.display = 'none';
+      return modes;
+    }
+    modeSwitch.style.display = '';
     modes.forEach(m => {
       const btn = document.createElement('button');
       btn.textContent = m.label;
@@ -96,7 +103,7 @@ const Viewer = (() => {
 
     const hint = document.createElement('div');
     hint.className = 'viewer-stage__hint';
-    hint.textContent = 'Seret untuk putar • cubit/scroll untuk zoom • AR tersedia di HP';
+    hint.textContent = 'Drag to orbit • pinch/scroll to zoom • AR available on phones';
     stage.appendChild(hint);
   }
 
@@ -112,7 +119,7 @@ const Viewer = (() => {
 
     const hint = document.createElement('div');
     hint.className = 'viewer-stage__hint';
-    hint.textContent = 'Seret ke kiri / kanan untuk memutar';
+    hint.textContent = 'Drag left / right to rotate';
     stage.appendChild(hint);
 
     let dragging = false;
@@ -169,7 +176,7 @@ const Viewer = (() => {
 
     const hint = document.createElement('div');
     hint.className = 'viewer-stage__hint';
-    hint.textContent = 'Seret untuk geser • scroll / cubit untuk zoom';
+    hint.textContent = 'Drag to pan • scroll / pinch to zoom';
     stage.appendChild(hint);
 
     function applyTransform() {
