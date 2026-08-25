@@ -35,9 +35,21 @@ di-showcase penuh. Item lain yang belum punya foto asli pakai **placeholder "cin
 
 **3 produk** (Amber Ring Slab Table, Fossil Stone Sphere, XL Raw Block) sudah dipasangi
 **contoh model 3D** (`.glb`) di `public/assets/models/` supaya mode "3D Model" bisa langsung
-dicoba — putar bebas + zoom + AR di HP. Model-model ini **dibuat secara prosedural**
-(bentuk generik: orb, slab, boulder + tekstur cincin kayu), **bukan hasil scan produk asli**.
-Ganti dengan file `.glb` hasil scan asli begitu tersedia (lihat bagian 4 di bawah).
+dicoba — putar bebas + zoom + AR di HP.
+
+- **Amber Ring Slab Table** sekarang pakai **model asli dari Meshy AI** (hasil image-to-3D
+  dari foto referensi, `furn-01-petrified-forest-table-meshy.glb`, ~18.7 MB, lisensi CC0 —
+  bebas dipakai komersial tanpa atribusi). Ini masih tahap **testing** sebelum Ferry putuskan
+  beli langganan Meshy Pro untuk model-model lain — kualitasnya bisa langsung dibandingkan
+  dengan model prosedural di dua produk lain.
+  ⚠️ **Catatan performa:** 18.7 MB itu besar untuk file web, terutama di koneksi mobile —
+  loading pertama kali bisa terasa lambat. Kalau nanti mau dipakai untuk banyak produk,
+  sebaiknya di-compress dulu (Meshy punya fitur *3D File Compressor*, atau pakai `gltf-transform`
+  / `gltfpack` untuk decimate + compress texture) supaya turun ke kisaran 1–3 MB per model.
+- **Fossil Stone Sphere** dan **XL Raw Block** masih pakai model **prosedural** (bentuk
+  generik: orb, boulder + tekstur cincin kayu), **bukan hasil scan produk asli**.
+
+Ganti dengan file `.glb` hasil scan/generate asli begitu tersedia (lihat bagian 4 di bawah).
 
 ---
 

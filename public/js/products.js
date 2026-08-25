@@ -28,9 +28,9 @@ const CATEGORIES = [
 
 const PRODUCTS = [
   // ---- TABLES & FURNITURE ----
-  { id:'furn-01', category:'furniture', name:'Amber Ring Slab Table', desc:'A single-slab table cut from petrified wood with its natural growth rings still intact, glossy polished finish. (The 3D model below is a generic sample shape — not a scan of the real piece.)',
+  { id:'furn-01', category:'furniture', name:'Amber Ring Slab Table', desc:'A single-slab table cut from petrified wood with its natural growth rings still intact, glossy polished finish. 3D model generated with Meshy AI from a reference photo — under testing before a full licence purchase.',
     meta:{ Size:'150 x 80 x 5 cm', Weight:'~180 kg', Finish:'Glossy polish' },
-    photo:null, spin:null, model:'/assets/models/meja-01-slab-amber.glb', ringSeed:1 },
+    photo:null, spin:null, model:'/assets/models/furn-01-petrified-forest-table-meshy.glb', ringSeed:1 },
   { id:'furn-02', category:'furniture', name:'Rustic Iron-Leg Table', desc:'Petrified wood slab paired with black iron legs for an industrial-rustic look.',
     meta:{ Size:'120 x 65 x 4 cm', Weight:'~110 kg', Finish:'Matte' },
     photo:null, spin:null, model:null, ringSeed:2 },
