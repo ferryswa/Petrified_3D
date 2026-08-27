@@ -37,15 +37,31 @@ di-showcase penuh. Item lain yang belum punya foto asli pakai **placeholder "cin
 **contoh model 3D** (`.glb`) di `public/assets/models/` supaya mode "3D Model" bisa langsung
 dicoba — putar bebas + zoom + AR di HP.
 
-- **Amber Ring Slab Table** sekarang pakai **model asli dari Meshy AI** (hasil image-to-3D
-  dari foto referensi, `furn-01-petrified-forest-table-meshy.glb`, ~18.7 MB, lisensi CC0 —
-  bebas dipakai komersial tanpa atribusi). Ini masih tahap **testing** sebelum Ferry putuskan
-  beli langganan Meshy Pro untuk model-model lain — kualitasnya bisa langsung dibandingkan
-  dengan model prosedural di dua produk lain.
-  ⚠️ **Catatan performa:** 18.7 MB itu besar untuk file web, terutama di koneksi mobile —
-  loading pertama kali bisa terasa lambat. Kalau nanti mau dipakai untuk banyak produk,
-  sebaiknya di-compress dulu (Meshy punya fitur *3D File Compressor*, atau pakai `gltf-transform`
-  / `gltfpack` untuk decimate + compress texture) supaya turun ke kisaran 1–3 MB per model.
+- **4 produk sudah pakai model asli dari Meshy AI** (hasil image-to-3D dari foto referensi,
+  lisensi CC0 — bebas dipakai komersial tanpa atribusi), masih tahap **testing** sebelum
+  Ferry putuskan beli langganan Meshy Pro untuk produk lainnya:
+  - **Amber Ring Slab Table** — `furn-01-petrified-forest-table-meshy.glb` (~400 KB)
+  - **Rustic Iron-Leg Table** — `furn-02-rustic-iron-leg-table-meshy.glb` (~280 KB)
+  - **Round Coffee Table** — `furn-03-round-coffee-table-meshy.glb` (~280 KB)
+  - **Decorative Bowl** — `orn-01-decorative-bowl-meshy.glb` (~260 KB)
+
+  Semua file ini **sudah dikompres** dari ukuran asli 8–19 MB turun ke kisaran 260–400 KB
+  (pakai `@gltf-transform/cli`: simplify mesh ke ~15-17% vertex asli + Draco mesh compression
+  + tekstur di-convert ke WebP, di-resize maks 1024px). Alasan dikompres:
+  1. **File asli kena limit upload GitHub web** (~25MB, kadang gagal di bawah itu juga kalau
+     upload beberapa file besar sekaligus) — dengan ukuran sekarang, upload jadi jauh lebih
+     lancar.
+  2. **Performa loading di HP jauh lebih cepat**, terutama buat buyer luar negeri dengan
+     koneksi bervariasi.
+
+  Kalau nanti generate model baru dari Meshy dan ukurannya besar lagi, jalankan perintah yang
+  sama untuk kompres sebelum upload ke repo:
+  ```bash
+  npm install -g @gltf-transform/cli
+  gltf-transform optimize input.glb output.glb \
+    --compress draco --simplify true --simplify-ratio 0.15 --simplify-error 0.001 \
+    --texture-compress webp --texture-size 1024
+  ```
 - **Fossil Stone Sphere** dan **XL Raw Block** masih pakai model **prosedural** (bentuk
   generik: orb, boulder + tekstur cincin kayu), **bukan hasil scan produk asli**.
 

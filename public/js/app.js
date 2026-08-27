@@ -51,6 +51,7 @@ function renderGrid() {
       <div class="card__media">
         ${product.photo ? `<img src="${product.photo}" alt="${product.name}">` : cardMediaSVG(product)}
         ${product.photo ? '' : '<span class="card__badge">SAMPLE</span>'}
+        ${product.soldOut ? '<span class="badge-soldout card__soldout">Sold Out</span>' : ''}
         <span class="card__viewer-tag">${viewerTagFor(product)}</span>
       </div>
       <div class="card__body">
@@ -74,6 +75,9 @@ function openProduct(product) {
   document.getElementById('viewerCat').textContent = CATEGORIES.find(c => c.id === product.category).label;
   document.getElementById('viewerTitle').textContent = product.name;
   document.getElementById('viewerDesc').textContent = product.desc;
+
+  const soldOutEl = document.getElementById('viewerSoldOut');
+  soldOutEl.hidden = !product.soldOut;
 
   const metaEl = document.getElementById('viewerMeta');
   metaEl.innerHTML = Object.entries(product.meta || {})
