@@ -67,6 +67,32 @@ dicoba — putar bebas + zoom + AR di HP.
 
 Ganti dengan file `.glb` hasil scan/generate asli begitu tersedia (lihat bagian 4 di bawah).
 
+**Semua produk non-aksen lainnya** (11 produk: 2 panel, sink, bathtub, lamp base, horse
+figure, trunk section, pendant, paperweight, dst) juga sudah dipasangi **model prosedural
+generik** (panel pipih, bowl/sink/bathtub hasil revolve profil, kolom lampu, figur abstrak
+untuk kuda, silinder untuk batang pohon) — semuanya bertekstur cincin kayu yang sama, ukuran
+file kecil (30-80 KB/model). Total sekarang **15 dari 18 produk** punya mode 3D aktif; 3
+sisanya (`furn-04`, `orn-05`, `raw-03`) sengaja photo-only karena ditandai `accent:true`.
+Ganti satu per satu dengan model asli begitu tersedia — kode viewer tidak perlu diubah,
+cukup timpa path `model` di `products.js`.
+
+## Thumbnail foto (bukan lagi ikon SVG)
+
+Semua 18 produk sekarang punya **foto thumbnail** asli hasil render dari model 3D masing-
+masing (bukan lagi diagram cincin SVG abstrak) — file JPG kecil (~25-35 KB) di
+`public/assets/photos/{id}.jpg`, di-render pakai Python (`pyrender` + OSMesa/EGL offscreen
+rendering, kamera studio dengan pencahayaan 3 titik di atas background krem polos). Ini
+tetap **placeholder/dummy**, bukan foto produk asli — cuma versi yang lebih enak dilihat
+daripada diagram cincin, karena dirender langsung dari bentuk 3D yang sama.
+
+Kalau nanti ganti model 3D suatu produk dengan yang asli, sebaiknya render ulang foto
+thumbnail-nya juga (atau ganti manual dengan foto produk asli) supaya thumbnail & model 3D
+tetap konsisten. Script render ada contohnya di histori pengerjaan — inti prosesnya:
+```python
+import pyrender, trimesh
+# load .glb, atur kamera look-at ke centroid objek, render offscreen, simpan sebagai .jpg
+```
+
 ---
 
 ## 1. Jalankan di lokal
