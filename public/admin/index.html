@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Petrified3D Admin</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<style>
+:root{--bg:#f6f1ea;--card:#fff;--ink:#2b1f16;--mute:#7a6757;--line:#e4d9cc;--brand:#4a3222;--accent:#b4682b;--ok:#2e7d4f;--bad:#b3261e}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.45 Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--brand);color:#fff;padding:12px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:5}
+header h1{font-size:17px;margin:0;flex:1}
+header a,header button{color:#fff}
+main{max-width:980px;margin:0 auto;padding:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:16px}
+h2{font-size:16px;margin:0 0 12px}
+label{display:block;font-weight:600;font-size:13px;margin:12px 0 4px}
+input,select,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;font:inherit;background:#fff;color:var(--ink)}
+textarea{min-height:90px;resize:vertical}
+button,.btn{font:inherit;font-weight:600;padding:10px 14px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+button.danger{color:var(--bad);border-color:var(--bad)}
+header button{background:transparent;border-color:#ffffff66}
+button:disabled{opacity:.5;cursor:wait}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tabs button[aria-selected=true]{background:var(--brand);color:#fff;border-color:var(--brand)}
+.row{display:flex;gap:10px;align-items:center}
+.row>*{flex:1}
+.row .fit{flex:none}
+.list-item{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.list-item:last-child{border-bottom:0}
+.list-item img,.thumb{width:52px;height:52px;border-radius:8px;object-fit:cover;background:#efe8de;flex:none}
+.list-item .t{flex:1;min-width:0}
+.list-item .t b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.list-item .t small{color:var(--mute)}
+.pill{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:#efe8de;color:var(--brand);margin-left:4px}
+.pill.bad{background:#fde7e5;color:var(--bad)}
+.pill.ok{background:#e1f3e8;color:var(--ok)}
+.checks{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px}
+.checks label{display:flex;gap:8px;align-items:center;margin:0;font-weight:500}
+.checks input{width:auto}
+.upload{border:2px dashed var(--line);border-radius:10px;padding:12px;margin-top:6px;background:#fbf8f4}
+.upload small{color:var(--mute);display:block;margin-top:6px}
+model-viewer{width:100%;height:280px;background:#efe8de;border-radius:10px;margin-top:10px}
+.preview-img{max-width:100%;max-height:200px;border-radius:10px;margin-top:10px;display:block}
+#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw;z-index:20}
+#toast.show{opacity:1}
+#toast.err{background:var(--bad)}
+.meta-row{display:flex;gap:8px;margin-bottom:6px}
+.meta-row input:first-child{flex:0 0 34%;min-width:0}
+.meta-row input:nth-child(2){flex:1;min-width:0}
+.meta-row button{flex:none}
+.hint{color:var(--mute);font-size:13px}
+.hidden{display:none!important}
+@media(max-width:560px){.row{flex-direction:column;align-items:stretch}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Petrified3D Admin</h1>
+  <a href="/" target="_blank" rel="noopener">View site</a>
+  <button id="logoutBtn" class="hidden">Log out</button>
+</header>
+
+<main>
+  <!-- LOGIN -->
+  <section id="loginView" class="card" style="max-width:420px;margin:40px auto">
+    <h2>Admin login</h2>
+    <p class="hint">Use the same Supabase account you use for the jastip admin. Only accounts listed in <code>p3d_admins</code> can edit.</p>
+    <form id="loginForm">
+      <label for="email">Email</label>
+      <input id="email" type="email" autocomplete="username" required>
+      <label for="password">Password</label>
+      <input id="password" type="password" autocomplete="current-password" required>
+      <p style="margin-top:16px"><button class="primary" style="width:100%">Log in</button></p>
+    </form>
+  </section>
+
+  <!-- APP -->
+  <section id="appView" class="hidden">
+    <div class="tabs" role="tablist">
+      <button data-tab="products" aria-selected="true">Products</button>
+      <button data-tab="categories" aria-selected="false">Categories</button>
+      <button data-tab="portfolio" aria-selected="false">Portfolio</button>
+      <button data-tab="tools" aria-selected="false">Backup</button>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div id="tab-products">
+      <div id="productListCard" class="card">
+        <div class="row" style="margin-bottom:8px">
+          <h2 style="margin:0">Products <span id="productCount" class="hint"></span></h2>
+          <span class="fit"><button class="primary" id="newProductBtn">+ New product</button></span>
+        </div>
+        <div id="productList"></div>
+      </div>
+
+      <div id="productFormCard" class="card hidden">
+        <div class="row" style="margin-bottom:4px">
+          <h2 style="margin:0" id="formTitle">Edit product</h2>
+          <span class="fit"><button id="cancelEditBtn">Close</button></span>
+        </div>
+        <form id="productForm" autocomplete="off">
+          <div class="row">
+            <div><label for="f_id">ID (unique, no spaces)</label><input id="f_id" required pattern="[a-z0-9\-]+" placeholder="e.g. furn-05"></div>
+            <div><label for="f_category">Category</label><select id="f_category" required></select></div>
+          </div>
+          <label for="f_name">Name</label>
+          <input id="f_name" required>
+          <label for="f_desc">Description</label>
+          <textarea id="f_desc"></textarea>
+
+          <label>Details (Size, Weight, Finish, …)</label>
+          <div id="metaRows"></div>
+          <button type="button" id="addMetaBtn">+ Add detail</button>
+
+          <label>3D model (.glb)</label>
+          <div class="upload">
+            <input type="file" id="modelFile" accept=".glb,model/gltf-binary">
+            <small>Max 50 MB. Compressed (Draco) GLBs load fastest. Uploading replaces the model for this product.</small>
+            <input id="f_model" placeholder="…or paste a model URL / path (/assets/models/x.glb)" style="margin-top:8px">
+            <div id="modelPreview"></div>
+          </div>
+
+          <label>Photo (thumbnail &amp; zoom)</label>
+          <div class="upload">
+            <input type="file" id="photoFile" accept="image/jpeg,image/png,image/webp">
+            <small>JPG / PNG / WebP, max 5 MB.</small>
+            <input id="f_photo" placeholder="…or paste a photo URL / path (/assets/photos/x.jpg)" style="margin-top:8px">
+            <div id="photoPreview"></div>
+          </div>
+
+          <div class="row">
+            <div><label for="f_sort">Sort order</label><input id="f_sort" type="number" value="0"></div>
+            <div><label for="f_ring">Placeholder seed</label><input id="f_ring" type="number" value="1"></div>
+          </div>
+          <div class="checks">
+            <label><input type="checkbox" id="f_accent"> Photo-only accent (no 3D)</label>
+            <label><input type="checkbox" id="f_sold"> Sold out</label>
+            <label><input type="checkbox" id="f_active" checked> Visible on site</label>
+          </div>
+
+          <div class="row" style="margin-top:20px">
+            <span class="fit"><button class="primary" id="saveBtn">Save product</button></span>
+            <span class="fit"><button type="button" class="danger hidden" id="deleteBtn">Delete</button></span>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- CATEGORIES -->
+    <div id="tab-categories" class="hidden">
+      <div class="card">
+        <h2>Categories</h2>
+        <div id="catList"></div>
+        <h2 style="margin-top:20px">Add category</h2>
+        <div class="row">
+          <input id="c_id" placeholder="id (e.g. lighting)">
+          <input id="c_label" placeholder="Label (e.g. Lamps &amp; Lighting)">
+          <span class="fit"><button class="primary" id="addCatBtn">Add</button></span>
+        </div>
+        <p class="hint">A category can only be deleted when it has no products.</p>
+      </div>
+    </div>
+
+    <!-- PORTFOLIO -->
+    <div id="tab-portfolio" class="hidden">
+      <div class="card">
+        <h2>Portfolio photos</h2>
+        <div id="pfList"></div>
+        <h2 style="margin-top:20px">Add portfolio item</h2>
+        <label for="p_group">Group</label>
+        <select id="p_group">
+          <option value="visit|Buyer Visit">Buyer Visit</option>
+          <option value="production|Production">Production</option>
+          <option value="stuffing|Stuffing &amp; Export">Stuffing &amp; Export</option>
+        </select>
+        <label for="p_caption">Caption</label>
+        <input id="p_caption">
+        <label>Photo</label>
+        <div class="upload"><input type="file" id="p_file" accept="image/jpeg,image/png,image/webp"><small>JPG / PNG / WebP, max 5 MB.</small></div>
+        <p><button class="primary" id="addPfBtn">Add item</button></p>
+      </div>
+    </div>
+
+    <!-- BACKUP -->
+    <div id="tab-tools" class="hidden">
+      <div class="card">
+        <h2>Fallback backup (products.json)</h2>
+        <p class="hint">The public site falls back to <code>/products.json</code> if Supabase is slow or paused. After big changes, download this file and replace <code>public/products.json</code> in GitHub.</p>
+        <button class="primary" id="exportBtn">Download products.json</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="toast"></div>
+
+<script>
+const CFG = {
+  url: 'https://cxresrjjlzruyerkqqqy.supabase.co',
+  key: 'sb_publishable_lyO2s8UewUmXqA2uCPWLlA_kra7091D',
+  bucket: 'p3d-assets'
+};
+const sb = supabase.createClient(CFG.url, CFG.key);
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+let categories = [], products = [], portfolio = [], editing = null; // editing: {isNew, id}
+
+function toast(msg, err) {
+  const t = $('toast'); t.textContent = msg; t.className = 'show' + (err ? ' err' : '');
+  clearTimeout(toast._t); toast._t = setTimeout(() => t.className = '', err ? 5000 : 2200);
+}
+function busy(btn, on) { if (btn) btn.disabled = on; }
+
+/* ---------- auth ---------- */
+async function enter(session) {
+  const { data, error } = await sb.from('p3d_admins').select('user_id').eq('user_id', session.user.id).maybeSingle();
+  if (error || !data) {
+    await sb.auth.signOut();
+    toast('This account is not a Petrified3D admin.', true);
+    return showLogin();
+  }
+  $('loginView').classList.add('hidden');
+  $('appView').classList.remove('hidden');
+  $('logoutBtn').classList.remove('hidden');
+  await loadAll();
+}
+function showLogin() {
+  $('loginView').classList.remove('hidden');
+  $('appView').classList.add('hidden');
+  $('logoutBtn').classList.add('hidden');
+}
+$('loginForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = e.submitter; busy(btn, true);
+  const { data, error } = await sb.auth.signInWithPassword({ email: $('email').value.trim(), password: $('password').value });
+  busy(btn, false);
+  if (error) return toast(error.message, true);
+  enter(data.session);
+});
+$('logoutBtn').addEventListener('click', async () => { await sb.auth.signOut(); showLogin(); });
+sb.auth.getSession().then(({ data }) => { if (data.session) enter(data.session); });
+
+/* ---------- tabs ---------- */
+document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.tabs button').forEach(x => x.setAttribute('aria-selected', String(x === b)));
+  ['products', 'categories', 'portfolio', 'tools'].forEach(t => $('tab-' + t).classList.toggle('hidden', t !== b.dataset.tab));
+}));
+
+/* ---------- data ---------- */
+async function loadAll() {
+  const [c, p, f] = await Promise.all([
+    sb.from('p3d_categories').select('*').order('sort'),
+    sb.from('p3d_products').select('*').order('sort'),
+    sb.from('p3d_portfolio').select('*').order('sort'),
+  ]);
+  if (c.error || p.error || f.error) return toast((c.error || p.error || f.error).message, true);
+  categories = c.data; products = p.data; portfolio = f.data;
+  renderProducts(); renderCategories(); renderPortfolio();
+}
+const catLabel = id => (categories.find(c => c.id === id) || {}).label || id;
+
+/* ---------- products list ---------- */
+function renderProducts() {
+  $('productCount').textContent = `(${products.length})`;
+  $('productList').innerHTML = products.map(p => `
+    <div class="list-item" data-id="${esc(p.id)}">
+      ${p.photo ? `<img src="${esc(p.photo)}" alt="" loading="lazy">` : '<span class="thumb"></span>'}
+      <div class="t"><b>${esc(p.name)}</b><small>${esc(p.id)} · ${esc(catLabel(p.category))}</small></div>
+      <div>
+        ${p.model ? '<span class="pill ok">3D</span>' : '<span class="pill">photo</span>'}
+        ${p.sold_out ? '<span class="pill bad">sold out</span>' : ''}
+        ${p.active ? '' : '<span class="pill bad">hidden</span>'}
+      </div>
+    </div>`).join('') || '<p class="hint">No products yet.</p>';
+  $('productList').querySelectorAll('.list-item').forEach(el => el.addEventListener('click', () => openForm(el.dataset.id)));
+  $('f_category').innerHTML = categories.map(c => `<option value="${esc(c.id)}">${esc(c.label)}</option>`).join('');
+}
+
+/* ---------- product form ---------- */
+function metaRow(k = '', v = '') {
+  const d = document.createElement('div'); d.className = 'meta-row';
+  d.innerHTML = `<input placeholder="Label" value="${esc(k)}"><input placeholder="Value" value="${esc(v)}"><button type="button" aria-label="Remove">✕</button>`;
+  d.querySelector('button').onclick = () => d.remove();
+  $('metaRows').appendChild(d);
+}
+$('addMetaBtn').onclick = () => metaRow();
+
+function previewModel() {
+  const u = $('f_model').value.trim();
+  $('modelPreview').innerHTML = u ? `<model-viewer src="${esc(u)}" camera-controls auto-rotate shadow-intensity="1"></model-viewer>` : '';
+}
+function previewPhoto() {
+  const u = $('f_photo').value.trim();
+  $('photoPreview').innerHTML = u ? `<img class="preview-img" src="${esc(u)}" alt="">` : '';
+}
+$('f_model').addEventListener('change', previewModel);
+$('f_photo').addEventListener('change', previewPhoto);
+
+function openForm(id) {
+  const p = id ? products.find(x => x.id === id) : null;
+  editing = { isNew: !p, id: p ? p.id : null };
+  $('formTitle').textContent = p ? 'Edit product' : 'New product';
+  $('f_id').value = p ? p.id : ''; $('f_id').readOnly = !!p;
+  $('f_category').value = p ? p.category : (categories[0] && categories[0].id);
+  $('f_name').value = p ? p.name : '';
+  $('f_desc').value = p ? (p.description || '') : '';
+  $('metaRows').innerHTML = '';
+  const meta = p ? p.meta || {} : { Size: '', Weight: '', Finish: '' };
+  Object.entries(meta).forEach(([k, v]) => metaRow(k, v));
+  $('f_model').value = p ? p.model || '' : '';
+  $('f_photo').value = p ? p.photo || '' : '';
+  $('modelFile').value = ''; $('photoFile').value = '';
+  $('f_sort').value = p ? p.sort : (products.length ? Math.max(...products.map(x => x.sort)) + 1 : 0);
+  $('f_ring').value = p ? p.ring_seed || 1 : Math.floor(Math.random() * 30) + 1;
+  $('f_accent').checked = p ? p.accent : false;
+  $('f_sold').checked = p ? p.sold_out : false;
+  $('f_active').checked = p ? p.active : true;
+  $('deleteBtn').classList.toggle('hidden', !p);
+  previewModel(); previewPhoto();
+  $('productListCard').classList.add('hidden');
+  $('productFormCard').classList.remove('hidden');
+  window.scrollTo(0, 0);
+}
+function closeForm() {
+  $('productFormCard').classList.add('hidden');
+  $('productListCard').classList.remove('hidden');
+  editing = null;
+}
+$('newProductBtn').onclick = () => openForm(null);
+$('cancelEditBtn').onclick = closeForm;
+
+/* ---------- uploads ---------- */
+async function uploadFile(file, folder, id, allowed, maxMB) {
+  const ext = (file.name.split('.').pop() || '').toLowerCase();
+  if (!allowed.includes(ext)) throw new Error('File type .' + ext + ' not allowed (use ' + allowed.join(', ') + ')');
+  if (file.size > maxMB * 1024 * 1024) throw new Error(`File is ${(file.size / 1048576).toFixed(1)} MB; max is ${maxMB} MB`);
+  const path = `${folder}/${id}-${Date.now()}.${ext}`;
+  const types = { glb: 'model/gltf-binary', jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp' };
+  const { error } = await sb.storage.from(CFG.bucket).upload(path, file, { contentType: types[ext], cacheControl: '31536000', upsert: false });
+  if (error) throw error;
+  return sb.storage.from(CFG.bucket).getPublicUrl(path).data.publicUrl;
+}
+
+$('modelFile').addEventListener('change', async e => {
+  const f = e.target.files[0]; if (!f) return;
+  const id = $('f_id').value.trim() || 'new';
+  toast('Uploading model…'); $('saveBtn').disabled = true;
+  try {
+    $('f_model').value = await uploadFile(f, 'models', id, ['glb'], 50);
+    previewModel(); toast('Model uploaded — press Save to apply');
+  } catch (err) { toast(err.message, true); e.target.value = ''; }
+  $('saveBtn').disabled = false;
+});
+$('photoFile').addEventListener('change', async e => {
+  const f = e.target.files[0]; if (!f) return;
+  const id = $('f_id').value.trim() || 'new';
+  toast('Uploading photo…'); $('saveBtn').disabled = true;
+  try {
+    $('f_photo').value = await uploadFile(f, 'photos', id, ['jpg', 'jpeg', 'png', 'webp'], 5);
+    previewPhoto(); toast('Photo uploaded — press Save to apply');
+  } catch (err) { toast(err.message, true); e.target.value = ''; }
+  $('saveBtn').disabled = false;
+});
+
+/* ---------- save / delete ---------- */
+$('productForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const meta = {};
+  $('metaRows').querySelectorAll('.meta-row').forEach(r => {
+    const [k, v] = r.querySelectorAll('input'); if (k.value.trim()) meta[k.value.trim()] = v.value.trim();
+  });
+  const row = {
+    id: $('f_id').value.trim(), category: $('f_category').value, name: $('f_name').value.trim(),
+    description: $('f_desc').value.trim(), meta,
+    photo: $('f_photo').value.trim() || null, model: $('f_model').value.trim() || null,
+    ring_seed: parseInt($('f_ring').value) || 1, sort: parseInt($('f_sort').value) || 0,
+    accent: $('f_accent').checked, sold_out: $('f_sold').checked, active: $('f_active').checked,
+  };
+  if (editing.isNew && products.some(p => p.id === row.id)) return toast('That ID already exists', true);
+  const btn = $('saveBtn'); busy(btn, true);
+  const q = editing.isNew ? sb.from('p3d_products').insert(row) : sb.from('p3d_products').update(row).eq('id', editing.id);
+  const { error } = await q; busy(btn, false);
+  if (error) return toast(error.message, true);
+  toast('Saved'); closeForm(); loadAll();
+});
+$('deleteBtn').onclick = async () => {
+  if (!confirm('Delete "' + $('f_name').value + '" permanently? (Tip: untick "Visible on site" to hide it instead.)')) return;
+  const { error } = await sb.from('p3d_products').delete().eq('id', editing.id);
+  if (error) return toast(error.message, true);
+  toast('Deleted'); closeForm(); loadAll();
+};
+
+/* ---------- categories ---------- */
+function renderCategories() {
+  $('catList').innerHTML = categories.map(c => `
+    <div class="meta-row" data-id="${esc(c.id)}">
+      <input value="${esc(c.label)}" data-f="label">
+      <input type="number" value="${c.sort}" data-f="sort" style="max-width:80px">
+      <button type="button" data-act="save">Save</button>
+      <button type="button" class="danger" data-act="del">✕</button>
+    </div>`).join('');
+  $('catList').querySelectorAll('.meta-row').forEach(r => {
+    const id = r.dataset.id;
+    r.querySelector('[data-act=save]').onclick = async () => {
+      const { error } = await sb.from('p3d_categories').update({ label: r.querySelector('[data-f=label]').value.trim(), sort: parseInt(r.querySelector('[data-f=sort]').value) || 0 }).eq('id', id);
+      error ? toast(error.message, true) : (toast('Saved'), loadAll());
+    };
+    r.querySelector('[data-act=del]').onclick = async () => {
+      if (!confirm('Delete category "' + id + '"?')) return;
+      const { error } = await sb.from('p3d_categories').delete().eq('id', id);
+      error ? toast('Cannot delete: move or delete its products first', true) : (toast('Deleted'), loadAll());
+    };
+  });
+}
+$('addCatBtn').onclick = async () => {
+  const id = $('c_id').value.trim().toLowerCase(), label = $('c_label').value.trim();
+  if (!/^[a-z0-9-]+$/.test(id) || !label) return toast('Enter an id (a-z, 0-9, -) and a label', true);
+  const sort = categories.length ? Math.max(...categories.map(c => c.sort)) + 1 : 0;
+  const { error } = await sb.from('p3d_categories').insert({ id, label, sort });
+  if (error) return toast(error.message, true);
+  $('c_id').value = $('c_label').value = ''; toast('Added'); loadAll();
+};
+
+/* ---------- portfolio ---------- */
+function renderPortfolio() {
+  $('pfList').innerHTML = portfolio.map(r => `
+    <div class="list-item" style="cursor:default">
+      ${r.photo ? `<img src="${esc(r.photo)}" alt="" loading="lazy">` : '<span class="thumb"></span>'}
+      <div class="t"><b>${esc(r.caption)}</b><small>${esc(r.group_label)}${r.photo ? '' : ' · placeholder (no photo yet)'}</small></div>
+      <button class="danger" data-id="${r.id}">✕</button>
+    </div>`).join('') || '<p class="hint">Empty.</p>';
+  $('pfList').querySelectorAll('button').forEach(b => b.onclick = async () => {
+    if (!confirm('Remove this portfolio item?')) return;
+    const { error } = await sb.from('p3d_portfolio').delete().eq('id', b.dataset.id);
+    error ? toast(error.message, true) : (toast('Removed'), loadAll());
+  });
+}
+$('addPfBtn').onclick = async () => {
+  const [group_key, group_label] = $('p_group').value.split('|');
+  const caption = $('p_caption').value.trim(), f = $('p_file').files[0];
+  if (!caption) return toast('Enter a caption', true);
+  const btn = $('addPfBtn'); busy(btn, true);
+  try {
+    const photo = f ? await uploadFile(f, 'portfolio', group_key, ['jpg', 'jpeg', 'png', 'webp'], 5) : null;
+    const sort = portfolio.length ? Math.max(...portfolio.map(r => r.sort)) + 1 : 0;
+    const { error } = await sb.from('p3d_portfolio').insert({ group_key, group_label, caption, photo, seed: Math.floor(Math.random() * 30) + 1, sort });
+    if (error) throw error;
+    $('p_caption').value = ''; $('p_file').value = ''; toast('Added'); loadAll();
+  } catch (err) { toast(err.message, true); }
+  busy(btn, false);
+};
+
+/* ---------- export ---------- */
+$('exportBtn').onclick = async () => {
+  const out = {
+    categories: categories.map(c => ({ id: c.id, label: c.label, sort: c.sort })),
+    products: products.filter(p => p.active).map(p => ({ id: p.id, category: p.category, name: p.name, description: p.description, meta: p.meta, photo: p.photo, spin: p.spin, model: p.model, ring_seed: p.ring_seed, accent: p.accent, sold_out: p.sold_out, sort: p.sort, active: true })),
+    portfolio: portfolio.map(r => ({ group_key: r.group_key, group_label: r.group_label, caption: r.caption, photo: r.photo, seed: r.seed, sort: r.sort })),
+  };
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(out, null, 1)], { type: 'application/json' }));
+  a.download = 'products.json'; a.click(); URL.revokeObjectURL(a.href);
+};
+</script>
+</body>
+</html>

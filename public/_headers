@@ -1,0 +1,16 @@
+/assets/*
+  Cache-Control: public, max-age=604800
+/assets/models/*
+  Content-Type: model/gltf-binary
+  Access-Control-Allow-Origin: *
+/js/*
+  Cache-Control: public, max-age=300
+/css/*
+  Cache-Control: public, max-age=300
+/products.json
+  Cache-Control: no-cache
+/
+  Cache-Control: no-cache
+/admin/*
+  Cache-Control: no-cache
+  X-Robots-Tag: noindex, nofollow

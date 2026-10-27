@@ -1,5 +1,9 @@
 document.getElementById('year').textContent = new Date().getFullYear();
 
+let CATEGORIES = [];
+let PRODUCTS = [];
+let PORTFOLIO = {};
+
 const tabsEl = document.querySelector('.tabs');
 const gridEl = document.getElementById('productGrid');
 const modal = document.getElementById('viewerModal');
@@ -17,6 +21,7 @@ function viewerTagFor(product) {
 }
 
 function renderTabs() {
+  tabsEl.innerHTML = '';
   const all = document.createElement('button');
   all.className = 'tab';
   all.textContent = 'All';
@@ -101,8 +106,6 @@ function closeModal() {
 modal.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', closeModal));
 window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
-renderTabs();
-render();
 
 // ---- Floating WhatsApp button: hidden until user scrolls past the hero on mobile ----
 const floatWa = document.querySelector('.float-wa');
@@ -120,41 +123,17 @@ if (floatWa) {
 }
 
 // ---- Hero featured product card ----
-const heroProduct = PRODUCTS.find(p => p.id === 'furn-01') || PRODUCTS[0];
-if (heroProduct) {
+function renderHero() {
+  const heroProduct = PRODUCTS.find(p => p.id === 'furn-01') || PRODUCTS[0];
+  if (!heroProduct) return;
+  {
   document.getElementById('heroProductName').textContent = heroProduct.name;
   document.getElementById('heroProductThumb').innerHTML = cardMediaSVG(heroProduct);
-  document.getElementById('heroProductCard').addEventListener('click', () => openProduct(heroProduct));
+  document.getElementById('heroProductCard').onclick = () => openProduct(heroProduct);
+  }
 }
 
 // ---- Portfolio: Buyer Visit / Production / Stuffing & Export ----
-const PORTFOLIO = {
-  visit: {
-    label: 'Buyer Visit',
-    items: [
-      { caption: 'Buyer inspecting raw blocks on-site', seed: 20 },
-      { caption: 'Walking the yard with an international buyer', seed: 21 },
-      { caption: 'Discussing custom sizing in person', seed: 22 },
-    ],
-  },
-  production: {
-    label: 'Production',
-    items: [
-      { caption: 'Cutting and shaping a raw block', seed: 23 },
-      { caption: 'Hand-polishing the surface', seed: 24 },
-      { caption: 'Quality check before finishing', seed: 25 },
-    ],
-  },
-  stuffing: {
-    label: 'Stuffing & Export',
-    items: [
-      { caption: 'Crating a piece for container shipment', seed: 26 },
-      { caption: 'Container stuffing at the warehouse', seed: 27 },
-      { caption: 'Loaded and ready for export', seed: 28 },
-    ],
-  },
-};
-
 const portfolioTabsEl = document.getElementById('portfolioTabs');
 const portfolioGridEl = document.getElementById('portfolioGrid');
 let activePortfolio = 'visit';
@@ -183,8 +162,7 @@ function renderPortfolio() {
     card.className = 'portfolio-card';
     card.innerHTML = `
       <div class="portfolio-card__media">
-        ${Viewer.placeholderSVG(item.seed)}
-        <span class="card__badge">SAMPLE</span>
+        ${item.photo ? `<img src="${item.photo}" alt="${item.caption}" loading="lazy">` : Viewer.placeholderSVG(item.seed) + '<span class="card__badge">SAMPLE</span>'}
       </div>
       <p>${item.caption}</p>
     `;
@@ -192,7 +170,27 @@ function renderPortfolio() {
   });
 }
 
-if (portfolioTabsEl && portfolioGridEl) {
-  renderPortfolioTabs();
-  renderPortfolio();
+function renderAll() {
+  renderTabs();
+  render();
+  renderHero();
+  if (!PORTFOLIO[activePortfolio]) activePortfolio = Object.keys(PORTFOLIO)[0];
+  if (portfolioTabsEl && portfolioGridEl && activePortfolio) {
+    renderPortfolioTabs();
+    renderPortfolio();
+  }
 }
+
+function applyData(d) {
+  CATEGORIES = d.categories; PRODUCTS = d.products; PORTFOLIO = d.portfolio;
+  renderAll();
+}
+
+// skeleton cards while the catalogue loads
+gridEl.innerHTML = Array.from({ length: 6 }, () => '<div class="card card--skeleton" aria-hidden="true"><div class="card__media"></div><div class="card__body"><h3>&nbsp;</h3><p>&nbsp;</p></div></div>').join('');
+
+window.loadCatalogue(applyData)
+  .then(applyData)
+  .catch(() => {
+    gridEl.innerHTML = '<p class="load-error">Catalogue could not be loaded. Please refresh, or message us on WhatsApp.</p>';
+  });

@@ -221,3 +221,10 @@ main > section{max-width:1240px; margin:0 auto; padding:64px 24px;}
   main > section{padding:48px 16px;}
   .viewer-modal__panel{margin:0; max-height:100vh; border-radius:0; height:100vh;}
 }
+
+/* loading skeleton + load error */
+.card--skeleton .card__media{background:linear-gradient(90deg,#efe8de 25%,#f7f2ea 50%,#efe8de 75%);background-size:200% 100%;animation:p3d-shimmer 1.4s linear infinite;aspect-ratio:1/1}
+.card--skeleton h3,.card--skeleton p{background:#efe8de;border-radius:4px;color:transparent;margin-top:8px}
+.load-error{grid-column:1/-1;text-align:center;padding:32px 0;color:#6b5646}
+@keyframes p3d-shimmer{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.card--skeleton .card__media{animation:none}}
