@@ -95,16 +95,38 @@ const Viewer = (() => {
     mv.setAttribute('camera-controls', '');
     mv.setAttribute('auto-rotate', '');
     mv.setAttribute('ar', '');
-    mv.setAttribute('ar-modes', 'webxr scene-viewer quick-look');
+    mv.setAttribute('ar-modes', 'scene-viewer webxr quick-look');
+    mv.setAttribute('ar-scale', 'fixed');
+    mv.setAttribute('ar-placement', 'floor');
+    mv.setAttribute('xr-environment', '');
+    mv.setAttribute('alt', product.name || '3D model');
     mv.setAttribute('shadow-intensity', '1');
     mv.setAttribute('exposure', '1');
     mv.style.background = '#0f0c0a';
+    const arBtn = document.createElement('button');
+    arBtn.type = 'button';
+    arBtn.slot = 'ar-button';
+    arBtn.className = 'ar-launch';
+    arBtn.textContent = 'View in your room (AR)';
+    mv.appendChild(arBtn);
     stage.appendChild(mv);
 
     const hint = document.createElement('div');
     hint.className = 'viewer-stage__hint';
-    hint.textContent = 'Drag to orbit • pinch/scroll to zoom • AR available on phones';
+    hint.textContent = 'Drag to orbit • pinch/scroll to zoom';
     stage.appendChild(hint);
+
+    // model-viewer only shows the AR button on devices that support AR; explain when it doesn't.
+    mv.addEventListener('load', () => {
+      if (!mv.canActivateAR) {
+        hint.textContent = 'Drag to orbit • AR works on phones (Android Chrome / iPhone Safari) — open this page on your phone';
+      }
+    });
+    mv.addEventListener('ar-status', (e) => {
+      if (e.detail.status === 'failed') {
+        hint.textContent = 'AR could not start. Allow camera access, use HTTPS, and try Chrome (Android) or Safari (iPhone).';
+      }
+    });
   }
 
   // ---- MODE: 360 photo spin (drag through frame sequence) ----
