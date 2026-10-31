@@ -228,3 +228,6 @@ main > section{max-width:1240px; margin:0 auto; padding:64px 24px;}
 .load-error{grid-column:1/-1;text-align:center;padding:32px 0;color:#6b5646}
 @keyframes p3d-shimmer{to{background-position:-200% 0}}
 @media (prefers-reduced-motion:reduce){.card--skeleton .card__media{animation:none}}
+
+/* AR launch button (model-viewer slot) */
+.ar-launch{position:absolute;left:50%;bottom:56px;transform:translateX(-50%);background:#fff;color:#2b1f16;border:0;border-radius:999px;padding:12px 20px;font:600 14px/1 Inter,system-ui,sans-serif;box-shadow:0 4px 16px rgba(0,0,0,.3);cursor:pointer;white-space:nowrap}
