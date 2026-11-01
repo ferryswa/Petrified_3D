@@ -4,6 +4,9 @@
 window.P3D_CONFIG = {
   SUPABASE_URL: 'https://cxresrjjlzruyerkqqqy.supabase.co',
   SUPABASE_KEY: 'sb_publishable_lyO2s8UewUmXqA2uCPWLlA_kra7091D',
+  // AR (Google Scene Viewer) downloads the GLB itself; serve it from jsDelivr (reads the GitHub repo)
+  // so Cloudflare bot filters can't block it. Must match your repo; leave '' to use the site's own files.
+  AR_CDN: 'https://cdn.jsdelivr.net/gh/ferryswa/Petrified_3D@main/public',
   CACHE_KEY: 'p3d_catalogue_v1',
   CACHE_TTL_MS: 10 * 60 * 1000,   // 10 min: serve cache instantly, refresh in background
   TIMEOUT_MS: 6000                // if Supabase is slow/paused, fall back to /products.json

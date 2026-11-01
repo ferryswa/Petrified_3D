@@ -111,6 +111,28 @@ const Viewer = (() => {
     mv.appendChild(arBtn);
     stage.appendChild(mv);
 
+    // Explicit launch: on Android open Google Scene Viewer directly (most reliable),
+    // elsewhere let model-viewer pick WebXR / Quick Look.
+    const launchAR = (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      const cdn = (window.P3D_CONFIG && window.P3D_CONFIG.AR_CDN) || '';
+      const abs = (cdn && product.model.startsWith('/'))
+        ? cdn + product.model
+        : new URL(product.model, location.href).href;
+      if (/Android/i.test(navigator.userAgent)) {
+        const fallback = encodeURIComponent(location.href);
+        location.href = 'intent://arvr.google.com/scene-viewer/1.0?file=' + encodeURIComponent(abs) +
+          '&mode=ar_preferred&title=' + encodeURIComponent(product.name || 'Petrified3D') +
+          '&resizable=false#Intent;scheme=https;package=com.google.android.googlequicksearchbox;' +
+          'action=android.intent.action.VIEW;S.browser_fallback_url=' + fallback + ';end;';
+      } else if (mv.canActivateAR) {
+        mv.activateAR();
+      }
+    };
+    arBtn.addEventListener('click', launchAR);
+    ['pointerdown', 'touchstart'].forEach(t => arBtn.addEventListener(t, e => e.stopPropagation(), { passive: true }));
+
     const hint = document.createElement('div');
     hint.className = 'viewer-stage__hint';
     hint.textContent = 'Drag to orbit • pinch/scroll to zoom';
