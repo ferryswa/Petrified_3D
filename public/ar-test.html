@@ -7,13 +7,13 @@
 <h1 style="font-size:20px">AR test</h1>
 <p>Tap the AR button on each model. Tell me which ones open the camera.</p>
 <h2>A. Google sample (astronaut)</h2>
-<model-viewer src="https://modelviewer.dev/shared-assets/models/Astronaut.glb" ar ar-modes="scene-viewer webxr quick-look" camera-controls><button slot="ar-button">AR – Google sample</button></model-viewer>
+<model-viewer src="https://modelviewer.dev/shared-assets/models/Astronaut.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls><button slot="ar-button">AR – Google sample</button></model-viewer>
 <h2>B. Our simple sphere (PNG texture, no Draco)</h2>
-<model-viewer src="/assets/models/orn-02-bola-fosil.glb" ar ar-modes="scene-viewer webxr quick-look" ar-scale="fixed" camera-controls><button slot="ar-button">AR – sphere</button></model-viewer>
+<model-viewer src="/assets/models/orn-02-bola-fosil.glb" ar ar-modes="webxr scene-viewer quick-look" ar-scale="fixed" camera-controls><button slot="ar-button">AR – sphere</button></model-viewer>
 <h2>C. Rustic Iron-Leg Table</h2>
-<model-viewer src="/assets/models/furn-02-rustic-iron-leg-table-meshy.glb" ar ar-modes="scene-viewer webxr quick-look" ar-scale="fixed" camera-controls><button slot="ar-button">AR – table</button></model-viewer>
+<model-viewer src="/assets/models/furn-02-rustic-iron-leg-table-meshy.glb" ar ar-modes="webxr scene-viewer quick-look" ar-scale="fixed" camera-controls><button slot="ar-button">AR – table</button></model-viewer>
 <h2>D. Same table, served from jsDelivr (GitHub CDN)</h2>
-<model-viewer src="https://cdn.jsdelivr.net/gh/ferryswa/Petrified_3D@main/public/assets/models/furn-02-rustic-iron-leg-table-meshy.glb" ar ar-modes="scene-viewer webxr quick-look" ar-scale="fixed" camera-controls><button slot="ar-button">AR – table via CDN</button></model-viewer>
+<model-viewer src="https://cdn.jsdelivr.net/gh/ferryswa/Petrified_3D@main/public/assets/models/furn-02-rustic-iron-leg-table-meshy.glb" ar ar-modes="webxr scene-viewer quick-look" ar-scale="fixed" camera-controls><button slot="ar-button">AR – table via CDN</button></model-viewer>
 <p id="st"></p>
 <script>document.querySelectorAll('model-viewer').forEach((m,i)=>m.addEventListener('ar-status',e=>{document.getElementById('st').textContent+=' '+'ABC'[i]+':'+e.detail.status}))</script>
 </body></html>
