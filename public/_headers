@@ -14,3 +14,5 @@
 /admin/*
   Cache-Control: no-cache
   X-Robots-Tag: noindex, nofollow
+/craft.json
+  Cache-Control: no-cache

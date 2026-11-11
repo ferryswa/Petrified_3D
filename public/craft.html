@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Craft Production — Petrified3D</title>
+<meta name="description" content="Watch how our petrified wood stone pieces are cut, shaped and polished by hand at our workshop in Tulungagung, East Java.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<style>
+.craft{max-width:1240px;margin:0 auto;padding:32px 24px 56px}
+.craft-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,328px),1fr));gap:24px;align-items:start}
+.craft-item{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:12px;min-height:320px;overflow:hidden}
+.craft-item .instagram-media{margin:0 auto!important;max-width:100%!important;min-width:0!important;width:100%!important}
+.craft-item p.cap{margin:10px 4px 2px;color:var(--ink-soft);font-size:.9rem}
+.craft-fallback{display:block;padding:24px;text-align:center;color:var(--ink-soft);font-size:.9rem}
+.craft-fallback a{color:var(--amber-dark);font-weight:600}
+.craft-status{color:var(--ink-soft);padding:24px 0}
+@media (max-width:560px){.craft{padding:20px 16px 40px}.topbar__nav{display:none}}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar__inner">
+    <a href="/" class="brand">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="16"/><circle cx="20" cy="20" r="10.5"/><circle cx="20" cy="20" r="5"/></svg>
+      </span>
+      <span class="brand__text">Petrified<em>3D</em><span class="brand__sub">Fossilised Wood Stone</span></span>
+    </a>
+    <nav class="topbar__nav">
+      <a href="/#collection">Collection</a>
+      <a href="/#viewer-info">How Viewing Works</a>
+      <a href="/#portfolio">Portfolio</a>
+      <a href="/craft.html" aria-current="page" style="color:var(--ink)">Craft Production</a>
+      <a href="/#location">Location &amp; Order</a>
+      <a href="/#about">About</a>
+    </nav>
+    <div class="topbar__actions">
+      <a href="/#location" class="nav-cta">Get Catalogue</a>
+    </div>
+  </div>
+</header>
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a><span>›</span><strong>Craft Production</strong>
+</nav>
+
+<main class="craft">
+  <div class="section-head">
+    <h2>Craft Production</h2>
+    <p>See how each piece is cut, shaped and polished by hand at our workshop in Tulungagung, East Java.</p>
+  </div>
+  <div id="craftGrid" class="craft-grid"></div>
+  <p id="craftStatus" class="craft-status">Loading…</p>
+</main>
+
+<footer class="footer">
+  <p>© <span id="year"></span> Petrified3D. Built to showcase the beauty of petrified wood, worldwide.</p>
+</footer>
+
+<a href="https://wa.me/62811725511" class="float-wa is-visible" target="_blank" rel="noopener" style="opacity:1;transform:none;pointer-events:auto">
+  <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.6-.8-1.9-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.2.2-.3.2-.5.1-.3-.1-1.2-.4-2.2-1.4-.8-.7-1.4-1.6-1.5-1.9-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.2-.4.1-.2 0-.3 0-.5-.1-.1-.6-1.4-.8-2-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.3 0 1.4 1 2.7 1.1 2.9.1.2 2 3 4.8 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.6-.7 1.9-1.3.2-.6.2-1.2.2-1.3-.1-.2-.3-.2-.6-.4z"/><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2z"/></svg>
+  <span>Chat on WhatsApp</span>
+</a>
+
+<script src="/js/config.js"></script>
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+(function () {
+  const C = window.P3D_CONFIG, grid = document.getElementById('craftGrid'), status = document.getElementById('craftStatus');
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+  async function fromSupabase() {
+    const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), C.TIMEOUT_MS);
+    try {
+      const r = await fetch(C.SUPABASE_URL + '/rest/v1/p3d_craft?select=*&order=sort', {
+        headers: { apikey: C.SUPABASE_KEY, Authorization: 'Bearer ' + C.SUPABASE_KEY }, signal: ctl.signal });
+      if (!r.ok) throw new Error(r.status);
+      return await r.json();
+    } finally { clearTimeout(t); }
+  }
+  async function load() {
+    try { return await fromSupabase(); }
+    catch (e) { const r = await fetch('/craft.json', { cache: 'no-cache' }); return r.json(); }
+  }
+  function permalink(u) {
+    try { const x = new URL(u); if (!/(^|\.)instagram\.com$/.test(x.hostname)) return null; return x.href; } catch (e) { return null; }
+  }
+  function render(items) {
+    const list = items.filter(i => i.active !== false && permalink(i.url));
+    if (!list.length) { status.textContent = 'Videos coming soon.'; return; }
+    status.remove();
+    grid.innerHTML = list.map(i => {
+      const u = permalink(i.url);
+      return `<article class="craft-item">
+        <blockquote class="instagram-media" data-instgrm-permalink="${esc(u)}" data-instgrm-version="14" style="background:#fff;border:0;margin:0;width:100%">
+          <a class="craft-fallback" href="${esc(u)}" target="_blank" rel="noopener">View this post on Instagram</a>
+        </blockquote>
+        ${i.caption ? `<p class="cap">${esc(i.caption)}</p>` : ''}
+      </article>`;
+    }).join('');
+    const s = document.createElement('script');
+    s.async = true; s.src = 'https://www.instagram.com/embed.js';
+    s.onload = () => window.instgrm && window.instgrm.Embeds.process();
+    document.body.appendChild(s);
+  }
+  load().then(render).catch(() => { status.textContent = 'Videos could not be loaded. Please refresh.'; });
+})();
+</script>
+</body>
+</html>

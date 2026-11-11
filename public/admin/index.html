@@ -87,6 +87,7 @@ model-viewer{width:100%;height:280px;background:#efe8de;border-radius:10px;margi
       <button data-tab="products" aria-selected="true">Products</button>
       <button data-tab="categories" aria-selected="false">Categories</button>
       <button data-tab="portfolio" aria-selected="false">Portfolio</button>
+      <button data-tab="craft" aria-selected="false">Craft Production</button>
       <button data-tab="tools" aria-selected="false">Backup</button>
     </div>
 
@@ -188,6 +189,21 @@ model-viewer{width:100%;height:280px;background:#efe8de;border-radius:10px;margi
       </div>
     </div>
 
+    <!-- CRAFT PRODUCTION -->
+    <div id="tab-craft" class="hidden">
+      <div class="card">
+        <h2>Craft Production (Instagram embeds)</h2>
+        <p class="hint">Shown on <code>/craft.html</code>. Paste a public Instagram post or reel link. Private accounts and posts with embedding disabled show only a "View on Instagram" link.</p>
+        <div id="craftList"></div>
+        <h2 style="margin-top:20px">Add video</h2>
+        <label for="cr_url">Instagram link</label>
+        <input id="cr_url" type="url" placeholder="https://www.instagram.com/p/XXXXXXXX/">
+        <label for="cr_caption">Caption (optional)</label>
+        <input id="cr_caption">
+        <p><button class="primary" id="addCrBtn">Add</button></p>
+      </div>
+    </div>
+
     <!-- BACKUP -->
     <div id="tab-tools" class="hidden">
       <div class="card">
@@ -211,7 +227,7 @@ const sb = supabase.createClient(CFG.url, CFG.key);
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-let categories = [], products = [], portfolio = [], editing = null; // editing: {isNew, id}
+let categories = [], products = [], portfolio = [], craft = [], editing = null; // editing: {isNew, id}
 
 function toast(msg, err) {
   const t = $('toast'); t.textContent = msg; t.className = 'show' + (err ? ' err' : '');
@@ -251,19 +267,20 @@ sb.auth.getSession().then(({ data }) => { if (data.session) enter(data.session);
 /* ---------- tabs ---------- */
 document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => {
   document.querySelectorAll('.tabs button').forEach(x => x.setAttribute('aria-selected', String(x === b)));
-  ['products', 'categories', 'portfolio', 'tools'].forEach(t => $('tab-' + t).classList.toggle('hidden', t !== b.dataset.tab));
+  ['products', 'categories', 'portfolio', 'craft', 'tools'].forEach(t => $('tab-' + t).classList.toggle('hidden', t !== b.dataset.tab));
 }));
 
 /* ---------- data ---------- */
 async function loadAll() {
-  const [c, p, f] = await Promise.all([
+  const [c, p, f, cr] = await Promise.all([
     sb.from('p3d_categories').select('*').order('sort'),
     sb.from('p3d_products').select('*').order('sort'),
     sb.from('p3d_portfolio').select('*').order('sort'),
+    sb.from('p3d_craft').select('*').order('sort'),
   ]);
-  if (c.error || p.error || f.error) return toast((c.error || p.error || f.error).message, true);
-  categories = c.data; products = p.data; portfolio = f.data;
-  renderProducts(); renderCategories(); renderPortfolio();
+  if (c.error || p.error || f.error || cr.error) return toast((c.error || p.error || f.error || cr.error).message, true);
+  categories = c.data; products = p.data; portfolio = f.data; craft = cr.data;
+  renderProducts(); renderCategories(); renderPortfolio(); renderCraft();
 }
 const catLabel = id => (categories.find(c => c.id === id) || {}).label || id;
 
@@ -456,6 +473,40 @@ $('addPfBtn').onclick = async () => {
     $('p_caption').value = ''; $('p_file').value = ''; toast('Added'); loadAll();
   } catch (err) { toast(err.message, true); }
   busy(btn, false);
+};
+
+/* ---------- craft production ---------- */
+function renderCraft() {
+  $('craftList').innerHTML = craft.map(r => `
+    <div class="meta-row" data-id="${r.id}">
+      <input value="${esc(r.url)}" data-f="url">
+      <input value="${esc(r.caption || '')}" data-f="caption" placeholder="Caption">
+      <input type="number" value="${r.sort}" data-f="sort" style="max-width:70px" aria-label="Order">
+      <label class="checks" style="margin:0"><input type="checkbox" data-f="active" ${r.active ? 'checked' : ''}> on</label>
+      <button type="button" data-act="save">Save</button>
+      <button type="button" class="danger" data-act="del">✕</button>
+    </div>`).join('') || '<p class="hint">No videos yet.</p>';
+  $('craftList').querySelectorAll('.meta-row').forEach(r => {
+    const id = r.dataset.id, g = f => r.querySelector('[data-f=' + f + ']');
+    r.querySelector('[data-act=save]').onclick = async () => {
+      if (!/^https:\/\/(www\.)?instagram\.com\//.test(g('url').value.trim())) return toast('Link must start with https://www.instagram.com/', true);
+      const { error } = await sb.from('p3d_craft').update({ url: g('url').value.trim(), caption: g('caption').value.trim() || null, sort: parseInt(g('sort').value) || 0, active: g('active').checked }).eq('id', id);
+      error ? toast(error.message, true) : (toast('Saved'), loadAll());
+    };
+    r.querySelector('[data-act=del]').onclick = async () => {
+      if (!confirm('Remove this video?')) return;
+      const { error } = await sb.from('p3d_craft').delete().eq('id', id);
+      error ? toast(error.message, true) : (toast('Removed'), loadAll());
+    };
+  });
+}
+$('addCrBtn').onclick = async () => {
+  const url = $('cr_url').value.trim();
+  if (!/^https:\/\/(www\.)?instagram\.com\//.test(url)) return toast('Paste a link starting with https://www.instagram.com/', true);
+  const sort = craft.length ? Math.max(...craft.map(r => r.sort)) + 1 : 0;
+  const { error } = await sb.from('p3d_craft').insert({ url, caption: $('cr_caption').value.trim() || null, sort });
+  if (error) return toast(error.message, true);
+  $('cr_url').value = $('cr_caption').value = ''; toast('Added'); loadAll();
 };
 
 /* ---------- export ---------- */
