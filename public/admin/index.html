@@ -86,7 +86,6 @@ model-viewer{width:100%;height:280px;background:#efe8de;border-radius:10px;margi
     <div class="tabs" role="tablist">
       <button data-tab="products" aria-selected="true">Products</button>
       <button data-tab="categories" aria-selected="false">Categories</button>
-      <button data-tab="portfolio" aria-selected="false">Portfolio</button>
       <button data-tab="craft" aria-selected="false">Craft Production</button>
       <button data-tab="tools" aria-selected="false">Backup</button>
     </div>
@@ -169,26 +168,6 @@ model-viewer{width:100%;height:280px;background:#efe8de;border-radius:10px;margi
       </div>
     </div>
 
-    <!-- PORTFOLIO -->
-    <div id="tab-portfolio" class="hidden">
-      <div class="card">
-        <h2>Portfolio photos</h2>
-        <div id="pfList"></div>
-        <h2 style="margin-top:20px">Add portfolio item</h2>
-        <label for="p_group">Group</label>
-        <select id="p_group">
-          <option value="visit|Buyer Visit">Buyer Visit</option>
-          <option value="production|Production">Production</option>
-          <option value="stuffing|Stuffing &amp; Export">Stuffing &amp; Export</option>
-        </select>
-        <label for="p_caption">Caption</label>
-        <input id="p_caption">
-        <label>Photo</label>
-        <div class="upload"><input type="file" id="p_file" accept="image/jpeg,image/png,image/webp"><small>JPG / PNG / WebP, max 5 MB.</small></div>
-        <p><button class="primary" id="addPfBtn">Add item</button></p>
-      </div>
-    </div>
-
     <!-- CRAFT PRODUCTION -->
     <div id="tab-craft" class="hidden">
       <div class="card">
@@ -227,7 +206,7 @@ const sb = supabase.createClient(CFG.url, CFG.key);
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-let categories = [], products = [], portfolio = [], craft = [], editing = null; // editing: {isNew, id}
+let categories = [], products = [], craft = [], editing = null; // editing: {isNew, id}
 
 function toast(msg, err) {
   const t = $('toast'); t.textContent = msg; t.className = 'show' + (err ? ' err' : '');
@@ -267,20 +246,19 @@ sb.auth.getSession().then(({ data }) => { if (data.session) enter(data.session);
 /* ---------- tabs ---------- */
 document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => {
   document.querySelectorAll('.tabs button').forEach(x => x.setAttribute('aria-selected', String(x === b)));
-  ['products', 'categories', 'portfolio', 'craft', 'tools'].forEach(t => $('tab-' + t).classList.toggle('hidden', t !== b.dataset.tab));
+  ['products', 'categories', 'craft', 'tools'].forEach(t => $('tab-' + t).classList.toggle('hidden', t !== b.dataset.tab));
 }));
 
 /* ---------- data ---------- */
 async function loadAll() {
-  const [c, p, f, cr] = await Promise.all([
+  const [c, p, cr] = await Promise.all([
     sb.from('p3d_categories').select('*').order('sort'),
     sb.from('p3d_products').select('*').order('sort'),
-    sb.from('p3d_portfolio').select('*').order('sort'),
     sb.from('p3d_craft').select('*').order('sort'),
   ]);
-  if (c.error || p.error || f.error || cr.error) return toast((c.error || p.error || f.error || cr.error).message, true);
-  categories = c.data; products = p.data; portfolio = f.data; craft = cr.data;
-  renderProducts(); renderCategories(); renderPortfolio(); renderCraft();
+  if (c.error || p.error || cr.error) return toast((c.error || p.error || cr.error).message, true);
+  categories = c.data; products = p.data; craft = cr.data;
+  renderProducts(); renderCategories(); renderCraft();
 }
 const catLabel = id => (categories.find(c => c.id === id) || {}).label || id;
 
@@ -446,35 +424,6 @@ $('addCatBtn').onclick = async () => {
   $('c_id').value = $('c_label').value = ''; toast('Added'); loadAll();
 };
 
-/* ---------- portfolio ---------- */
-function renderPortfolio() {
-  $('pfList').innerHTML = portfolio.map(r => `
-    <div class="list-item" style="cursor:default">
-      ${r.photo ? `<img src="${esc(r.photo)}" alt="" loading="lazy">` : '<span class="thumb"></span>'}
-      <div class="t"><b>${esc(r.caption)}</b><small>${esc(r.group_label)}${r.photo ? '' : ' · placeholder (no photo yet)'}</small></div>
-      <button class="danger" data-id="${r.id}">✕</button>
-    </div>`).join('') || '<p class="hint">Empty.</p>';
-  $('pfList').querySelectorAll('button').forEach(b => b.onclick = async () => {
-    if (!confirm('Remove this portfolio item?')) return;
-    const { error } = await sb.from('p3d_portfolio').delete().eq('id', b.dataset.id);
-    error ? toast(error.message, true) : (toast('Removed'), loadAll());
-  });
-}
-$('addPfBtn').onclick = async () => {
-  const [group_key, group_label] = $('p_group').value.split('|');
-  const caption = $('p_caption').value.trim(), f = $('p_file').files[0];
-  if (!caption) return toast('Enter a caption', true);
-  const btn = $('addPfBtn'); busy(btn, true);
-  try {
-    const photo = f ? await uploadFile(f, 'portfolio', group_key, ['jpg', 'jpeg', 'png', 'webp'], 5) : null;
-    const sort = portfolio.length ? Math.max(...portfolio.map(r => r.sort)) + 1 : 0;
-    const { error } = await sb.from('p3d_portfolio').insert({ group_key, group_label, caption, photo, seed: Math.floor(Math.random() * 30) + 1, sort });
-    if (error) throw error;
-    $('p_caption').value = ''; $('p_file').value = ''; toast('Added'); loadAll();
-  } catch (err) { toast(err.message, true); }
-  busy(btn, false);
-};
-
 /* ---------- craft production ---------- */
 function renderCraft() {
   $('craftList').innerHTML = craft.map(r => `
@@ -514,7 +463,6 @@ $('exportBtn').onclick = async () => {
   const out = {
     categories: categories.map(c => ({ id: c.id, label: c.label, sort: c.sort })),
     products: products.filter(p => p.active).map(p => ({ id: p.id, category: p.category, name: p.name, description: p.description, meta: p.meta, photo: p.photo, spin: p.spin, model: p.model, ring_seed: p.ring_seed, accent: p.accent, sold_out: p.sold_out, sort: p.sort, active: true })),
-    portfolio: portfolio.map(r => ({ group_key: r.group_key, group_label: r.group_label, caption: r.caption, photo: r.photo, seed: r.seed, sort: r.sort })),
   };
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([JSON.stringify(out, null, 1)], { type: 'application/json' }));

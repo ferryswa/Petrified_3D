@@ -1,5 +1,5 @@
 /* Catalogue loader: Supabase -> (cache) -> /products.json fallback.
- * Exposes window.loadCatalogue(onUpdate) -> Promise<{categories, products, portfolio}> */
+ * Exposes window.loadCatalogue(onUpdate) -> Promise<{categories, products}> */
 (function () {
   const C = window.P3D_CONFIG;
 
@@ -13,12 +13,7 @@
         meta: p.meta || {}, photo: p.photo || null, spin: p.spin || null, model: p.model || null,
         ringSeed: p.ring_seed || 1, accent: !!p.accent, soldOut: !!p.sold_out,
       }));
-    const portfolio = {};
-    (raw.portfolio || []).slice().sort((a, b) => a.sort - b.sort).forEach(r => {
-      (portfolio[r.group_key] = portfolio[r.group_key] || { label: r.group_label, items: [] })
-        .items.push({ caption: r.caption, seed: r.seed || 1, photo: r.photo || null });
-    });
-    return { categories, products, portfolio };
+    return { categories, products };
   }
 
   async function sb(table, signal) {
@@ -34,11 +29,11 @@
     const ctl = new AbortController();
     const t = setTimeout(() => ctl.abort(), C.TIMEOUT_MS);
     try {
-      const [categories, products, portfolio] = await Promise.all([
-        sb('p3d_categories', ctl.signal), sb('p3d_products', ctl.signal), sb('p3d_portfolio', ctl.signal),
+      const [categories, products] = await Promise.all([
+        sb('p3d_categories', ctl.signal), sb('p3d_products', ctl.signal),
       ]);
       if (!products.length) throw new Error('empty');
-      return { categories, products, portfolio };
+      return { categories, products };
     } finally { clearTimeout(t); }
   }
 

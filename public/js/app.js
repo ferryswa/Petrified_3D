@@ -2,7 +2,6 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
 let CATEGORIES = [];
 let PRODUCTS = [];
-let PORTFOLIO = {};
 
 const tabsEl = document.querySelector('.tabs');
 const gridEl = document.getElementById('productGrid');
@@ -133,56 +132,14 @@ function renderHero() {
   }
 }
 
-// ---- Portfolio: Buyer Visit / Production / Stuffing & Export ----
-const portfolioTabsEl = document.getElementById('portfolioTabs');
-const portfolioGridEl = document.getElementById('portfolioGrid');
-let activePortfolio = 'visit';
-
-function renderPortfolioTabs() {
-  portfolioTabsEl.innerHTML = '';
-  Object.entries(PORTFOLIO).forEach(([key, group]) => {
-    const btn = document.createElement('button');
-    btn.className = 'tab';
-    btn.textContent = group.label;
-    btn.dataset.key = key;
-    btn.setAttribute('role', 'tab');
-    btn.setAttribute('aria-selected', String(activePortfolio === key));
-    btn.addEventListener('click', () => { activePortfolio = key; renderPortfolio(); });
-    portfolioTabsEl.appendChild(btn);
-  });
-}
-
-function renderPortfolio() {
-  [...portfolioTabsEl.children].forEach(btn => {
-    btn.setAttribute('aria-selected', String(btn.dataset.key === activePortfolio));
-  });
-  portfolioGridEl.innerHTML = '';
-  PORTFOLIO[activePortfolio].items.forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'portfolio-card';
-    card.innerHTML = `
-      <div class="portfolio-card__media">
-        ${item.photo ? `<img src="${item.photo}" alt="${item.caption}" loading="lazy">` : Viewer.placeholderSVG(item.seed) + '<span class="card__badge">SAMPLE</span>'}
-      </div>
-      <p>${item.caption}</p>
-    `;
-    portfolioGridEl.appendChild(card);
-  });
-}
-
 function renderAll() {
   renderTabs();
   render();
   renderHero();
-  if (!PORTFOLIO[activePortfolio]) activePortfolio = Object.keys(PORTFOLIO)[0];
-  if (portfolioTabsEl && portfolioGridEl && activePortfolio) {
-    renderPortfolioTabs();
-    renderPortfolio();
-  }
 }
 
 function applyData(d) {
-  CATEGORIES = d.categories; PRODUCTS = d.products; PORTFOLIO = d.portfolio;
+  CATEGORIES = d.categories; PRODUCTS = d.products;
   renderAll();
 }
 

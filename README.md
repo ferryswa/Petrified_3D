@@ -168,23 +168,9 @@ Upload hasilnya ke `public/assets/photos/` lalu update `products.js`.
 
 ---
 
-## 5. Section Portfolio (Buyer Visit / Production / Stuffing & Export)
+## 5. Halaman Craft Production
 
-Section baru `#portfolio` menampilkan 3 tab: **Buyer Visit**, **Production**, **Stuffing &
-Export** — masing-masing berisi grid foto placeholder (SVG cincin + caption). Data ada di
-`public/js/app.js`, cari objek `PORTFOLIO`:
-
-```js
-const PORTFOLIO = {
-  visit:      { label: 'Buyer Visit', items: [{ caption: '...', seed: 20 }, ...] },
-  production: { label: 'Production', items: [...] },
-  stuffing:   { label: 'Stuffing & Export', items: [...] },
-};
-```
-
-Ganti tiap item jadi foto asli dengan menambahkan field `photo: '/assets/photos/xxx.jpg'`
-lalu sesuaikan render di `renderPortfolio()` (`app.js`) untuk pakai `<img>` kalau field
-`photo` terisi — sama seperti pola yang dipakai di grid produk.
+Halaman `/craft.html` menampilkan video/postingan Instagram lewat embed resmi. Kelola dari admin → tab **Craft Production** (tempel link Instagram publik). Data di tabel `p3d_craft`, cadangan di `public/craft.json`. Section Portfolio sudah dihapus dari situs dan admin (tabel `p3d_portfolio` di Supabase sengaja dibiarkan, tidak dipakai).
 
 ---
 
@@ -209,7 +195,7 @@ petrified3d/
 │   ├── js/
 │   │   ├── products.js    # data 6 kategori + produk (edit di sini)
 │   │   ├── viewer.js       # engine viewer (3D model / spin 360 / photo zoom)
-│   │   └── app.js          # render grid, tabs, portfolio, buka modal
+│   │   └── app.js          # render grid, tabs, buka modal
 │   └── assets/
 │       ├── photos/         # taruh foto asli di sini
 │       └── models/         # 3 contoh .glb generik ada di sini (ganti dgn scan asli)

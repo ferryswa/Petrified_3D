@@ -36,7 +36,7 @@
    "id": "furn-01",
    "category": "furniture",
    "name": "Amber Ring Slab Table",
-   "description": "A single-slab table cut from petrified wood with its natural growth rings still intact, glossy polished finish. 3D model generated with Meshy AI from a reference photo — under testing before a full licence purchase.",
+   "description": "A single-slab table cut from petrified wood with its natural growth rings still intact, glossy polished finish. 3D model generated with Meshy AI from a reference photo \u2014 under testing before a full licence purchase.",
    "meta": {
     "Size": "150 x 80 x 5 cm",
     "Weight": "~180 kg",
@@ -55,7 +55,7 @@
    "id": "furn-02",
    "category": "furniture",
    "name": "Rustic Iron-Leg Table",
-   "description": "Petrified wood slab paired with black iron legs for an industrial-rustic look. 3D model generated with Meshy AI from a reference photo — under testing before a full licence purchase.",
+   "description": "Petrified wood slab paired with black iron legs for an industrial-rustic look. 3D model generated with Meshy AI from a reference photo \u2014 under testing before a full licence purchase.",
    "meta": {
     "Size": "120 x 65 x 4 cm",
     "Weight": "~110 kg",
@@ -74,9 +74,9 @@
    "id": "furn-03",
    "category": "furniture",
    "name": "Round Coffee Table",
-   "description": "A round coffee table that follows the natural shape of the original fossilised trunk. 3D model generated with Meshy AI from a reference photo — under testing before a full licence purchase.",
+   "description": "A round coffee table that follows the natural shape of the original fossilised trunk. 3D model generated with Meshy AI from a reference photo \u2014 under testing before a full licence purchase.",
    "meta": {
-    "Size": "Ø70 x 45 cm",
+    "Size": "\u00d870 x 45 cm",
     "Weight": "~65 kg",
     "Finish": "Glossy polish"
    },
@@ -93,7 +93,7 @@
    "id": "furn-04",
    "category": "furniture",
    "name": "Live-Edge Coffee Table",
-   "description": "Live-edge petrified wood tabletop on a slim brass-toned base — a statement centrepiece for a living room seating area. Shown here as a photo-only accent piece in the catalogue.",
+   "description": "Live-edge petrified wood tabletop on a slim brass-toned base \u2014 a statement centrepiece for a living room seating area. Shown here as a photo-only accent piece in the catalogue.",
    "meta": {
     "Size": "110 x 70 x 40 cm",
     "Weight": "~140 kg",
@@ -112,7 +112,7 @@
    "id": "panel-01",
    "category": "panel",
    "name": "Mosaic Wall Panel",
-   "description": "Thin petrified wood cuts arranged into a mosaic pattern for a feature wall accent. (The 3D model below is a generic sample shape — not a scan of the real piece.)",
+   "description": "Thin petrified wood cuts arranged into a mosaic pattern for a feature wall accent. (The 3D model below is a generic sample shape \u2014 not a scan of the real piece.)",
    "meta": {
     "Size": "60 x 60 cm / module",
     "Thickness": "1.5 cm",
@@ -131,7 +131,7 @@
    "id": "panel-02",
    "category": "panel",
    "name": "TV Backdrop Panel",
-   "description": "A single large panel for a TV backdrop or feature wall. (The 3D model below is a generic sample shape — not a scan of the real piece.)",
+   "description": "A single large panel for a TV backdrop or feature wall. (The 3D model below is a generic sample shape \u2014 not a scan of the real piece.)",
    "meta": {
     "Size": "200 x 100 cm",
     "Thickness": "3 cm",
@@ -150,9 +150,9 @@
    "id": "sink-01",
    "category": "sanitary",
    "name": "Fossil Vessel Sink",
-   "description": "A countertop vessel sink turned and hollowed from a solid block, showing the stone grain on every side. Sealed with a water-resistant coating for daily bathroom use. (The 3D model below is a generic sample shape — not a scan of the real piece.)",
+   "description": "A countertop vessel sink turned and hollowed from a solid block, showing the stone grain on every side. Sealed with a water-resistant coating for daily bathroom use. (The 3D model below is a generic sample shape \u2014 not a scan of the real piece.)",
    "meta": {
-    "Size": "Ø45 x 18 cm",
+    "Size": "\u00d845 x 18 cm",
     "Weight": "~25 kg",
     "Finish": "Glossy polish + sealant"
    },
@@ -169,7 +169,7 @@
    "id": "bath-01",
    "category": "sanitary",
    "name": "Fossil Stone Bathtub",
-   "description": "A carved bathtub from a large petrified wood block, built to be the centrepiece of a luxury bathroom. Made to order depending on block availability. (The 3D model below is a generic sample shape — not a scan of the real piece.)",
+   "description": "A carved bathtub from a large petrified wood block, built to be the centrepiece of a luxury bathroom. Made to order depending on block availability. (The 3D model below is a generic sample shape \u2014 not a scan of the real piece.)",
    "meta": {
     "Size": "170 x 80 x 55 cm",
     "Weight": "~450 kg",
@@ -188,9 +188,9 @@
    "id": "orn-01",
    "category": "ornament",
    "name": "Decorative Bowl",
-   "description": "A turned decorative bowl from a solid block, showing the natural colour banding. 3D model generated with Meshy AI from a reference photo — under testing before a full licence purchase.",
+   "description": "A turned decorative bowl from a solid block, showing the natural colour banding. 3D model generated with Meshy AI from a reference photo \u2014 under testing before a full licence purchase.",
    "meta": {
-    "Size": "Ø25 x 12 cm",
+    "Size": "\u00d825 x 12 cm",
     "Weight": "~4 kg",
     "Finish": "Glossy polish"
    },
@@ -207,7 +207,7 @@
    "id": "orn-02",
    "category": "ornament",
    "name": "Fossil Stone Sphere",
-   "description": "A plain decorative sphere, perfect for a desk or display shelf. (The 3D model below is a generic sample shape — not a scan of the real piece.)",
+   "description": "A plain decorative sphere, perfect for a desk or display shelf. (The 3D model below is a generic sample shape \u2014 not a scan of the real piece.)",
    "meta": {
     "Diameter": "15 cm",
     "Weight": "~5.5 kg",
@@ -226,7 +226,7 @@
    "id": "orn-03",
    "category": "ornament",
    "name": "Fossil Table Lamp Base",
-   "description": "A table lamp base cut from petrified wood, with a hidden channel for the cable. (The 3D model below is a generic sample shape — not a scan of the real piece.)",
+   "description": "A table lamp base cut from petrified wood, with a hidden channel for the cable. (The 3D model below is a generic sample shape \u2014 not a scan of the real piece.)",
    "meta": {
     "Size": "20 x 20 x 30 cm",
     "Weight": "~7 kg",
@@ -245,7 +245,7 @@
    "id": "orn-04",
    "category": "ornament",
    "name": "Fossil Horse Figure",
-   "description": "A hand-carved horse figure from a solid petrified wood block, showing natural colour gradation along its form. Makes a striking shelf or console centrepiece. (The 3D model below is a generic sample shape — not a scan of the real piece.)",
+   "description": "A hand-carved horse figure from a solid petrified wood block, showing natural colour gradation along its form. Makes a striking shelf or console centrepiece. (The 3D model below is a generic sample shape \u2014 not a scan of the real piece.)",
    "meta": {
     "Size": "35 x 12 x 30 cm",
     "Weight": "~9 kg",
@@ -264,7 +264,7 @@
    "id": "orn-05",
    "category": "ornament",
    "name": "Fossil Vase (accent piece)",
-   "description": "A small decorative vase used purely as a styling accent — shown as a photo only in this catalogue, no 3D/AR mode.",
+   "description": "A small decorative vase used purely as a styling accent \u2014 shown as a photo only in this catalogue, no 3D/AR mode.",
    "meta": {
     "Size": "12 x 12 x 22 cm",
     "Weight": "~3 kg",
@@ -283,7 +283,7 @@
    "id": "raw-01",
    "category": "raw",
    "name": "XL Raw Block",
-   "description": "A large unfinished block, showing the fossilised bark texture as-is. (The 3D model below is a generic sample shape — not a scan of the real piece.)",
+   "description": "A large unfinished block, showing the fossilised bark texture as-is. (The 3D model below is a generic sample shape \u2014 not a scan of the real piece.)",
    "meta": {
     "Size": "80 x 50 x 40 cm",
     "Weight": "~220 kg",
@@ -302,7 +302,7 @@
    "id": "raw-02",
    "category": "raw",
    "name": "Whole Trunk Section",
-   "description": "A section of fossilised trunk that still shows its original form in full. (The 3D model below is a generic sample shape — not a scan of the real piece.)",
+   "description": "A section of fossilised trunk that still shows its original form in full. (The 3D model below is a generic sample shape \u2014 not a scan of the real piece.)",
    "meta": {
     "Length": "110 cm",
     "Weight": "~300 kg",
@@ -321,7 +321,7 @@
    "id": "raw-03",
    "category": "raw",
    "name": "Root Stump Table Base",
-   "description": "A raw root-stump base, ideal as a side table or standalone sculptural piece — shown as a photo-only accent piece in this catalogue.",
+   "description": "A raw root-stump base, ideal as a side table or standalone sculptural piece \u2014 shown as a photo-only accent piece in this catalogue.",
    "meta": {
     "Size": "55 x 50 x 48 cm",
     "Weight": "~95 kg",
@@ -340,7 +340,7 @@
    "id": "acc-01",
    "category": "accessory",
    "name": "Mini Fossil Pendant",
-   "description": "A small collector-grade cut for a pendant necklace, with sharp amber tones. (The 3D model below is a generic sample shape — not a scan of the real piece.)",
+   "description": "A small collector-grade cut for a pendant necklace, with sharp amber tones. (The 3D model below is a generic sample shape \u2014 not a scan of the real piece.)",
    "meta": {
     "Size": "3 x 2 cm",
     "Weight": "~15 g",
@@ -358,8 +358,8 @@
   {
    "id": "acc-02",
    "category": "accessory",
-   "name": "Collector’s Paperweight",
-   "description": "A collector-grade cut for a desk display, comes with a certificate of authenticity. (The 3D model below is a generic sample shape — not a scan of the real piece.)",
+   "name": "Collector\u2019s Paperweight",
+   "description": "A collector-grade cut for a desk display, comes with a certificate of authenticity. (The 3D model below is a generic sample shape \u2014 not a scan of the real piece.)",
    "meta": {
     "Size": "6 x 5 x 3 cm",
     "Weight": "~180 g",
@@ -373,80 +373,6 @@
    "sold_out": false,
    "sort": 17,
    "active": true
-  }
- ],
- "portfolio": [
-  {
-   "group_key": "visit",
-   "group_label": "Buyer Visit",
-   "caption": "Buyer inspecting raw blocks on-site",
-   "photo": null,
-   "seed": 20,
-   "sort": 0
-  },
-  {
-   "group_key": "visit",
-   "group_label": "Buyer Visit",
-   "caption": "Walking the yard with an international buyer",
-   "photo": null,
-   "seed": 21,
-   "sort": 1
-  },
-  {
-   "group_key": "visit",
-   "group_label": "Buyer Visit",
-   "caption": "Discussing custom sizing in person",
-   "photo": null,
-   "seed": 22,
-   "sort": 2
-  },
-  {
-   "group_key": "production",
-   "group_label": "Production",
-   "caption": "Cutting and shaping a raw block",
-   "photo": null,
-   "seed": 23,
-   "sort": 3
-  },
-  {
-   "group_key": "production",
-   "group_label": "Production",
-   "caption": "Hand-polishing the surface",
-   "photo": null,
-   "seed": 24,
-   "sort": 4
-  },
-  {
-   "group_key": "production",
-   "group_label": "Production",
-   "caption": "Quality check before finishing",
-   "photo": null,
-   "seed": 25,
-   "sort": 5
-  },
-  {
-   "group_key": "stuffing",
-   "group_label": "Stuffing & Export",
-   "caption": "Crating a piece for container shipment",
-   "photo": null,
-   "seed": 26,
-   "sort": 6
-  },
-  {
-   "group_key": "stuffing",
-   "group_label": "Stuffing & Export",
-   "caption": "Container stuffing at the warehouse",
-   "photo": null,
-   "seed": 27,
-   "sort": 7
-  },
-  {
-   "group_key": "stuffing",
-   "group_label": "Stuffing & Export",
-   "caption": "Loaded and ready for export",
-   "photo": null,
-   "seed": 28,
-   "sort": 8
   }
  ]
 }
