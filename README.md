@@ -201,3 +201,6 @@ petrified3d/
 │       └── models/         # 3 contoh .glb generik ada di sini (ganti dgn scan asli)
 └── README.md
 ```
+
+## Katalog (Nov 2026)
+Katalog mengikuti materi PDF: 10 produk (Sinks, Pedestal Sinks, Tables & Slabs, Stools) dengan harga per ukuran (`price_label` + `variants` di tabel `p3d_products`). 4 produk punya GLB untuk AR (`public/assets/models/`, sudah dikecilkan ±3 MB). Produk dummy lama di-set `active=false` di Supabase (tidak dihapus). Tambah/ubah produk & GLB lewat `/admin`.

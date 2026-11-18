@@ -61,6 +61,7 @@ function renderGrid() {
       <div class="card__body">
         <h3>${product.name}</h3>
         <p>${CATEGORIES.find(c => c.id === product.category).label}</p>
+        ${product.price ? `<p class="card__price">${product.price}</p>` : ''}
       </div>
     `;
     card.addEventListener('click', () => openProduct(product));
@@ -87,6 +88,12 @@ function openProduct(product) {
   metaEl.innerHTML = Object.entries(product.meta || {})
     .map(([k, v]) => `<span>${k}: ${v}</span>`)
     .join('');
+
+  const priceEl = document.getElementById('viewerPrices');
+  priceEl.innerHTML = (product.variants || []).length
+    ? '<h4>Size &amp; Price</h4><table>' + product.variants.map(v => `<tr><td>${v.size}</td><td>${v.price}</td></tr>`).join('') + '</table><p class="price-note">Prices in IDR, ex-shipping. Each piece is unique — contact us for current stock &amp; motifs.</p>'
+    : '';
+  priceEl.hidden = !priceEl.innerHTML;
 
   Viewer.open(product);
 
@@ -123,7 +130,7 @@ if (floatWa) {
 
 // ---- Hero featured product card ----
 function renderHero() {
-  const heroProduct = PRODUCTS.find(p => p.id === 'furn-01') || PRODUCTS[0];
+  const heroProduct = PRODUCTS.find(p => p.id === 'sink-regular') || PRODUCTS[0];
   if (!heroProduct) return;
   {
   document.getElementById('heroProductName').textContent = heroProduct.name;

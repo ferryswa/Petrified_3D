@@ -224,3 +224,15 @@ main > section{max-width:1240px; margin:0 auto; padding:64px 24px;}
 
 /* AR launch button (model-viewer slot) */
 .ar-launch{position:absolute;left:50%;bottom:56px;transform:translateX(-50%);background:#fff;color:#2b1f16;border:0;border-radius:999px;padding:12px 20px;font:600 14px/1 Inter,system-ui,sans-serif;box-shadow:0 4px 16px rgba(0,0,0,.3);cursor:pointer;white-space:nowrap}
+
+/* price display */
+.card__price{margin-top:6px;font-weight:600;color:var(--accent,#b06a2c);font-size:.9rem}
+.viewer-prices{margin-top:16px}
+.viewer-prices h4{margin:0 0 8px;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.viewer-prices table{width:100%;border-collapse:collapse;font-size:.9rem}
+.viewer-prices td{padding:7px 0;border-bottom:1px solid rgba(128,128,128,.25)}
+.viewer-prices td:last-child{text-align:right;font-weight:600;white-space:nowrap;padding-left:12px}
+.viewer-prices .price-note{margin:8px 0 0;font-size:.75rem;color:var(--ink-soft)}
+.badge-soldout[hidden]{display:none}
+.card__media{background:#fff}
+.card__media img{width:100%;height:100%;object-fit:contain;display:block}

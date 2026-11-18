@@ -4,7 +4,7 @@
   const C = window.P3D_CONFIG;
 
   function normalise(raw) {
-    const categories = (raw.categories || []).slice().sort((a, b) => a.sort - b.sort);
+    const allCats = (raw.categories || []).slice().sort((a, b) => a.sort - b.sort);
     const products = (raw.products || [])
       .filter(p => p.active !== false)
       .sort((a, b) => a.sort - b.sort)
@@ -12,7 +12,10 @@
         id: p.id, category: p.category, name: p.name, desc: p.description || '',
         meta: p.meta || {}, photo: p.photo || null, spin: p.spin || null, model: p.model || null,
         ringSeed: p.ring_seed || 1, accent: !!p.accent, soldOut: !!p.sold_out,
+        price: p.price_label || '', variants: Array.isArray(p.variants) ? p.variants : [],
       }));
+    const used = new Set(products.map(p => p.category));
+    const categories = allCats.filter(c => used.has(c.id));   // hide empty categories
     return { categories, products };
   }
 

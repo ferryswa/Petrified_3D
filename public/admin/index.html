@@ -115,6 +115,11 @@ model-viewer{width:100%;height:280px;background:#efe8de;border-radius:10px;margi
           <label for="f_desc">Description</label>
           <textarea id="f_desc"></textarea>
 
+          <label for="f_price">Price label (shown on card, e.g. From IDR 850.000)</label>
+          <input id="f_price">
+          <label for="f_variants">Size &amp; price list (one per line: size | price)</label>
+          <textarea id="f_variants" rows="5" placeholder="40 - 50 cm | IDR 850.000"></textarea>
+
           <label>Details (Size, Weight, Finish, …)</label>
           <div id="metaRows"></div>
           <button type="button" id="addMetaBtn">+ Add detail</button>
@@ -307,6 +312,8 @@ function openForm(id) {
   $('f_category').value = p ? p.category : (categories[0] && categories[0].id);
   $('f_name').value = p ? p.name : '';
   $('f_desc').value = p ? (p.description || '') : '';
+  $('f_price').value = p ? p.price_label || '' : '';
+  $('f_variants').value = p ? (p.variants || []).map(v => v.size + ' | ' + v.price).join('\n') : '';
   $('metaRows').innerHTML = '';
   const meta = p ? p.meta || {} : { Size: '', Weight: '', Finish: '' };
   Object.entries(meta).forEach(([k, v]) => metaRow(k, v));
@@ -375,6 +382,8 @@ $('productForm').addEventListener('submit', async e => {
   const row = {
     id: $('f_id').value.trim(), category: $('f_category').value, name: $('f_name').value.trim(),
     description: $('f_desc').value.trim(), meta,
+    price_label: $('f_price').value.trim() || null,
+    variants: $('f_variants').value.split('\n').map(l => l.split('|').map(x => x.trim())).filter(a => a[0]).map(a => ({ size: a[0], price: a[1] || '' })),
     photo: $('f_photo').value.trim() || null, model: $('f_model').value.trim() || null,
     ring_seed: parseInt($('f_ring').value) || 1, sort: parseInt($('f_sort').value) || 0,
     accent: $('f_accent').checked, sold_out: $('f_sold').checked, active: $('f_active').checked,
@@ -462,7 +471,7 @@ $('addCrBtn').onclick = async () => {
 $('exportBtn').onclick = async () => {
   const out = {
     categories: categories.map(c => ({ id: c.id, label: c.label, sort: c.sort })),
-    products: products.filter(p => p.active).map(p => ({ id: p.id, category: p.category, name: p.name, description: p.description, meta: p.meta, photo: p.photo, spin: p.spin, model: p.model, ring_seed: p.ring_seed, accent: p.accent, sold_out: p.sold_out, sort: p.sort, active: true })),
+    products: products.filter(p => p.active).map(p => ({ id: p.id, category: p.category, name: p.name, description: p.description, meta: p.meta, photo: p.photo, spin: p.spin, model: p.model, price_label: p.price_label, variants: p.variants, ring_seed: p.ring_seed, accent: p.accent, sold_out: p.sold_out, sort: p.sort, active: true })),
   };
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([JSON.stringify(out, null, 1)], { type: 'application/json' }));
