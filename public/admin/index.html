@@ -115,10 +115,8 @@ model-viewer{width:100%;height:280px;background:#efe8de;border-radius:10px;margi
           <label for="f_desc">Description</label>
           <textarea id="f_desc"></textarea>
 
-          <label for="f_price">Price label (shown on card, e.g. From IDR 850.000)</label>
-          <input id="f_price">
-          <label for="f_variants">Size &amp; price list (one per line: size | price)</label>
-          <textarea id="f_variants" rows="5" placeholder="40 - 50 cm | IDR 850.000"></textarea>
+          <label for="f_variants">Available sizes (one per line)</label>
+          <textarea id="f_variants" rows="5" placeholder="40 - 50 cm"></textarea>
 
           <label>Details (Size, Weight, Finish, …)</label>
           <div id="metaRows"></div>
@@ -312,8 +310,7 @@ function openForm(id) {
   $('f_category').value = p ? p.category : (categories[0] && categories[0].id);
   $('f_name').value = p ? p.name : '';
   $('f_desc').value = p ? (p.description || '') : '';
-  $('f_price').value = p ? p.price_label || '' : '';
-  $('f_variants').value = p ? (p.variants || []).map(v => v.size + ' | ' + v.price).join('\n') : '';
+  $('f_variants').value = p ? (p.variants || []).map(v => v.size).join('\n') : '';
   $('metaRows').innerHTML = '';
   const meta = p ? p.meta || {} : { Size: '', Weight: '', Finish: '' };
   Object.entries(meta).forEach(([k, v]) => metaRow(k, v));
@@ -382,8 +379,8 @@ $('productForm').addEventListener('submit', async e => {
   const row = {
     id: $('f_id').value.trim(), category: $('f_category').value, name: $('f_name').value.trim(),
     description: $('f_desc').value.trim(), meta,
-    price_label: $('f_price').value.trim() || null,
-    variants: $('f_variants').value.split('\n').map(l => l.split('|').map(x => x.trim())).filter(a => a[0]).map(a => ({ size: a[0], price: a[1] || '' })),
+    price_label: 'Ask for Price',
+    variants: $('f_variants').value.split('\n').map(l => l.trim()).filter(Boolean).map(size => ({ size })),
     photo: $('f_photo').value.trim() || null, model: $('f_model').value.trim() || null,
     ring_seed: parseInt($('f_ring').value) || 1, sort: parseInt($('f_sort').value) || 0,
     accent: $('f_accent').checked, sold_out: $('f_sold').checked, active: $('f_active').checked,

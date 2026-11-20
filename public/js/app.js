@@ -61,7 +61,7 @@ function renderGrid() {
       <div class="card__body">
         <h3>${product.name}</h3>
         <p>${CATEGORIES.find(c => c.id === product.category).label}</p>
-        ${product.price ? `<p class="card__price">${product.price}</p>` : ''}
+        <p class="card__price">Ask for Price</p>
       </div>
     `;
     card.addEventListener('click', () => openProduct(product));
@@ -90,10 +90,12 @@ function openProduct(product) {
     .join('');
 
   const priceEl = document.getElementById('viewerPrices');
-  priceEl.innerHTML = (product.variants || []).length
-    ? '<h4>Size &amp; Price</h4><table>' + product.variants.map(v => `<tr><td>${v.size}</td><td>${v.price}</td></tr>`).join('') + '</table><p class="price-note">Prices in IDR, ex-shipping. Each piece is unique — contact us for current stock &amp; motifs.</p>'
-    : '';
-  priceEl.hidden = !priceEl.innerHTML;
+  const waUrl = 'https://wa.me/62811725511?text=' + encodeURIComponent("Hi, I'd like to ask for the price of: " + product.name);
+  priceEl.innerHTML = '<h4>Available sizes</h4>'
+    + ((product.variants || []).length ? '<table>' + product.variants.map(v => `<tr><td>${v.size}</td></tr>`).join('') + '</table>' : '')
+    + `<a class="btn btn--primary price-cta" href="${waUrl}" target="_blank" rel="noopener">Ask for Price on WhatsApp</a>`
+    + '<p class="price-note">Each piece is unique — contact us for current stock, motifs and shipping.</p>';
+  priceEl.hidden = false;
 
   Viewer.open(product);
 

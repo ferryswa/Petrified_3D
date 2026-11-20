@@ -12,7 +12,7 @@
         id: p.id, category: p.category, name: p.name, desc: p.description || '',
         meta: p.meta || {}, photo: p.photo || null, spin: p.spin || null, model: p.model || null,
         ringSeed: p.ring_seed || 1, accent: !!p.accent, soldOut: !!p.sold_out,
-        price: p.price_label || '', variants: Array.isArray(p.variants) ? p.variants : [],
+        variants: (Array.isArray(p.variants) ? p.variants : []).map(v => ({ size: v.size })),   // prices are never shown: Ask for Price
       }));
     const used = new Set(products.map(p => p.category));
     const categories = allCats.filter(c => used.has(c.id));   // hide empty categories

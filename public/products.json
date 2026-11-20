@@ -40,31 +40,25 @@
    "sold_out": false,
    "sort": 0,
    "active": true,
-   "price_label": "From IDR 850.000",
+   "price_label": "Ask for Price",
    "variants": [
     {
-     "size": "40 - 50 cm",
-     "price": "IDR 850.000"
+     "size": "40 - 50 cm"
     },
     {
-     "size": "51 - 60 cm",
-     "price": "IDR 950.000"
+     "size": "51 - 60 cm"
     },
     {
-     "size": "61 - 70 cm",
-     "price": "IDR 1.200.000"
+     "size": "61 - 70 cm"
     },
     {
-     "size": "71 - 80 cm",
-     "price": "IDR 1.600.000"
+     "size": "71 - 80 cm"
     },
     {
-     "size": "81 - 90 cm",
-     "price": "IDR 2.600.000"
+     "size": "81 - 90 cm"
     },
     {
-     "size": "91 - 100 cm",
-     "price": "IDR 2.900.000"
+     "size": "91 - 100 cm"
     }
    ]
   },
@@ -86,31 +80,25 @@
    "sold_out": false,
    "sort": 1,
    "active": true,
-   "price_label": "From IDR 850.000",
+   "price_label": "Ask for Price",
    "variants": [
     {
-     "size": "40 - 50 cm",
-     "price": "IDR 850.000"
+     "size": "40 - 50 cm"
     },
     {
-     "size": "51 - 60 cm",
-     "price": "IDR 950.000"
+     "size": "51 - 60 cm"
     },
     {
-     "size": "61 - 70 cm",
-     "price": "IDR 1.200.000"
+     "size": "61 - 70 cm"
     },
     {
-     "size": "71 - 80 cm",
-     "price": "IDR 1.600.000"
+     "size": "71 - 80 cm"
     },
     {
-     "size": "81 - 90 cm",
-     "price": "IDR 2.600.000"
+     "size": "81 - 90 cm"
     },
     {
-     "size": "91 - 100 cm",
-     "price": "IDR 2.900.000"
+     "size": "91 - 100 cm"
     }
    ]
   },
@@ -132,19 +120,16 @@
    "sold_out": false,
    "sort": 2,
    "active": true,
-   "price_label": "From IDR 1.050.000",
+   "price_label": "Ask for Price",
    "variants": [
     {
-     "size": "40 - 50 cm",
-     "price": "IDR 1.050.000"
+     "size": "40 - 50 cm"
     },
     {
-     "size": "51 - 60 cm",
-     "price": "IDR 1.150.000"
+     "size": "51 - 60 cm"
     },
     {
-     "size": "61 - 70 cm",
-     "price": "IDR 1.400.000"
+     "size": "61 - 70 cm"
     }
    ]
   },
@@ -167,19 +152,16 @@
    "sold_out": false,
    "sort": 3,
    "active": true,
-   "price_label": "From IDR 950.000",
+   "price_label": "Ask for Price",
    "variants": [
     {
-     "size": "40 - 50 cm",
-     "price": "IDR 950.000"
+     "size": "40 - 50 cm"
     },
     {
-     "size": "51 - 60 cm",
-     "price": "IDR 1.050.000"
+     "size": "51 - 60 cm"
     },
     {
-     "size": "61 - 70 cm",
-     "price": "IDR 1.600.000"
+     "size": "61 - 70 cm"
     }
    ]
   },
@@ -201,31 +183,25 @@
    "sold_out": false,
    "sort": 4,
    "active": true,
-   "price_label": "From IDR 850.000",
+   "price_label": "Ask for Price",
    "variants": [
     {
-     "size": "40 - 50 cm",
-     "price": "IDR 850.000"
+     "size": "40 - 50 cm"
     },
     {
-     "size": "51 - 60 cm",
-     "price": "IDR 950.000"
+     "size": "51 - 60 cm"
     },
     {
-     "size": "61 - 70 cm",
-     "price": "IDR 1.200.000"
+     "size": "61 - 70 cm"
     },
     {
-     "size": "71 - 80 cm",
-     "price": "IDR 1.600.000"
+     "size": "71 - 80 cm"
     },
     {
-     "size": "81 - 90 cm",
-     "price": "IDR 2.600.000"
+     "size": "81 - 90 cm"
     },
     {
-     "size": "91 - 100 cm",
-     "price": "IDR 2.900.000"
+     "size": "91 - 100 cm"
     }
    ]
   },
@@ -247,11 +223,10 @@
    "sold_out": false,
    "sort": 5,
    "active": true,
-   "price_label": "From IDR 7.500.000",
+   "price_label": "Ask for Price",
    "variants": [
     {
-     "size": "Ø40 - 50 cm x 90 cm",
-     "price": "From IDR 7.500.000"
+     "size": "Ø40 - 50 cm x 90 cm"
     }
    ]
   },
@@ -273,11 +248,10 @@
    "sold_out": false,
    "sort": 6,
    "active": true,
-   "price_label": "From IDR 2.400.000",
+   "price_label": "Ask for Price",
    "variants": [
     {
-     "size": "Ø40 - 50 cm x 90 cm",
-     "price": "From IDR 2.400.000"
+     "size": "Ø40 - 50 cm x 90 cm"
     }
    ]
   },
@@ -299,31 +273,25 @@
    "sold_out": false,
    "sort": 7,
    "active": true,
-   "price_label": "From IDR 750.000",
+   "price_label": "Ask for Price",
    "variants": [
     {
-     "size": "50 - 60 cm",
-     "price": "IDR 750.000"
+     "size": "50 - 60 cm"
     },
     {
-     "size": "61 - 70 cm",
-     "price": "IDR 850.000"
+     "size": "61 - 70 cm"
     },
     {
-     "size": "71 - 80 cm",
-     "price": "IDR 1.200.000"
+     "size": "71 - 80 cm"
     },
     {
-     "size": "81 - 90 cm",
-     "price": "IDR 2.400.000"
+     "size": "81 - 90 cm"
     },
     {
-     "size": "91 - 100 cm",
-     "price": "IDR 3.600.000"
+     "size": "91 - 100 cm"
     },
     {
-     "size": "100 - 120 cm",
-     "price": "IDR 4.500.000"
+     "size": "100 - 120 cm"
     }
    ]
   },
@@ -345,19 +313,16 @@
    "sold_out": false,
    "sort": 8,
    "active": true,
-   "price_label": "From IDR 14.000.000",
+   "price_label": "Ask for Price",
    "variants": [
     {
-     "size": "220 x 70 x 7 cm",
-     "price": "IDR 22.000.000"
+     "size": "220 x 70 x 7 cm"
     },
     {
-     "size": "170 x 80 x 6 cm",
-     "price": "IDR 16.000.000"
+     "size": "170 x 80 x 6 cm"
     },
     {
-     "size": "160 x 60 x 6 cm",
-     "price": "IDR 14.000.000"
+     "size": "160 x 60 x 6 cm"
     }
    ]
   },
@@ -379,11 +344,10 @@
    "sold_out": false,
    "sort": 9,
    "active": true,
-   "price_label": "From IDR 1.400.000",
+   "price_label": "Ask for Price",
    "variants": [
     {
-     "size": "Ø30 - 40 cm x 40 - 45 cm height",
-     "price": "From IDR 1.400.000"
+     "size": "Ø30 - 40 cm x 40 - 45 cm height"
     }
    ]
   }
