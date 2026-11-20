@@ -237,3 +237,4 @@ main > section{max-width:1240px; margin:0 auto; padding:64px 24px;}
 .card__media{background:#fff}
 .card__media img{width:100%;height:100%;object-fit:contain;display:block}
 .viewer-prices .price-cta{display:inline-flex;margin-top:14px}
+.viewer-prices td:only-child{text-align:left;padding-left:0}
