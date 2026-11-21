@@ -131,15 +131,7 @@ if (floatWa) {
 }
 
 // ---- Hero featured product card ----
-function renderHero() {
-  const heroProduct = PRODUCTS.find(p => p.id === 'sink-regular') || PRODUCTS[0];
-  if (!heroProduct) return;
-  {
-  document.getElementById('heroProductName').textContent = heroProduct.name;
-  document.getElementById('heroProductThumb').innerHTML = cardMediaSVG(heroProduct);
-  document.getElementById('heroProductCard').onclick = () => openProduct(heroProduct);
-  }
-}
+function renderHero() { /* landing hero is static; nothing to render */ }
 
 function renderAll() {
   renderTabs();

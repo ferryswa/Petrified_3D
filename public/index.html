@@ -25,20 +25,7 @@
 </head>
 <body>
 
-<div class="promo">
-  <div class="promo__track" aria-hidden="true">
-    <span>Worldwide shipping &amp; export</span>
-    <span>Every piece view-able in 3D &amp; AR before you buy</span>
-    <span>Custom sizing on request via WhatsApp</span>
-    <span>Direct from our Tulungagung workshop</span>
-    <span>Worldwide shipping &amp; export</span>
-    <span>Every piece view-able in 3D &amp; AR before you buy</span>
-    <span>Custom sizing on request via WhatsApp</span>
-    <span>Direct from our Tulungagung workshop</span>
-  </div>
-</div>
-
-<header class="topbar">
+<header class="topbar topbar--overlay" id="topbar">
   <div class="topbar__inner">
     <a href="#top" class="brand">
       <span class="brand__mark" aria-hidden="true">
@@ -46,7 +33,7 @@
       </span>
       <span class="brand__text">Petrified<em>3D</em><span class="brand__sub">Fossilised Wood Stone</span></span>
     </a>
-    <nav class="topbar__nav">
+    <nav class="topbar__nav" id="topnav">
       <a href="#collection">Collection</a>
       <a href="#viewer-info">How Viewing Works</a>
       <a href="/craft.html">Craft Production</a>
@@ -54,50 +41,45 @@
       <a href="#about">About</a>
     </nav>
     <div class="topbar__actions">
-      <button class="icon-btn" aria-label="Search products">
+      <a href="#collection" class="icon-btn" aria-label="Search the collection">
         <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-      </button>
+      </a>
       <a href="#location" class="nav-cta">Get Catalogue</a>
+      <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav">
+        <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
     </div>
   </div>
 </header>
 
-<nav class="breadcrumb" aria-label="Breadcrumb">
-  <a href="#top">Home</a><span>›</span><strong>Collection</strong>
-</nav>
-
 <main id="top">
 
-  <section class="hero">
-    <div class="hero__frame">
-      <div class="hero__photo" aria-hidden="true">
-        <img src="/assets/photos/hero-living-room-placeholder.jpg" alt="Sample living room with furniture — placeholder image, to be replaced with a real room/product photo">
+  <section class="landing">
+    <img class="landing__bg" src="/assets/photos/hero-living-room-placeholder.jpg" alt="Living room styled with petrified wood coffee table and stool">
+    <div class="landing__scrim" aria-hidden="true"></div>
+
+    <div class="landing__card">
+      <h1>Millions of Years in Stone, Made for Your Home.</h1>
+      <p>Every petrified wood piece is a fossilised tree, polished by hand in our Tulungagung workshop into sinks, table tops, slabs and stools. Preview each one in 3D and AR, or share your idea for a custom size and we will find the right stone for it.</p>
+      <div class="landing__links">
+        <a href="#viewer-info">See it in 3D &amp; AR</a>
+        <a href="#location">Custom order</a>
       </div>
-      <div class="hero__scrim" aria-hidden="true"></div>
-
-      <a href="#collection" class="hero__badge">View Collection</a>
-
-      <a href="#viewer-info" class="hero__ai-pill">
-        <span class="dot"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 5.4L19 10l-5.2 1.6L12 17l-1.8-5.4L5 10l5.2-1.6z"/></svg></span>
-        See it in 3D &amp; AR
-      </a>
-
-      <button class="hero__product-card" id="heroProductCard" type="button">
-        <span class="hero__product-card__thumb" id="heroProductThumb"></span>
-        <span class="hero__product-card__body">
-          <h4 id="heroProductName">Amber Ring Slab Table</h4>
-          <p>View in 3D →</p>
-        </span>
-        <span class="hero__product-card__cta">
-          <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
-        </span>
-      </button>
     </div>
 
-    <div class="hero__caption">
-      <p class="eyebrow">Every ring holds a thousand years</p>
-      <h1>See exactly how each piece would feel in your home — before it ships anywhere in the world</h1>
-      <p>Rotate, zoom, and preview in AR — explore the real grain and form of every petrified wood piece, wherever you are.</p>
+    <a href="#collection" class="landing__explore">Explore <svg viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+
+    <div class="promo" aria-hidden="true">
+      <div class="promo__track">
+        <span>Worldwide shipping &amp; export</span>
+        <span>Every piece view-able in 3D &amp; AR before you buy</span>
+        <span>Custom sizing on request via WhatsApp</span>
+        <span>Direct from our Tulungagung workshop</span>
+        <span>Worldwide shipping &amp; export</span>
+        <span>Every piece view-able in 3D &amp; AR before you buy</span>
+        <span>Custom sizing on request via WhatsApp</span>
+        <span>Direct from our Tulungagung workshop</span>
+      </div>
     </div>
   </section>
 
@@ -209,5 +191,14 @@
 <script src="/js/data.js"></script>
 <script src="/js/viewer.js"></script>
 <script src="/js/app.js"></script>
+<script>
+(function(){
+  var h=document.getElementById('topbar'),m=document.getElementById('menuBtn'),n=document.getElementById('topnav');
+  function f(){h.classList.toggle('is-solid',window.scrollY>40||n.classList.contains('is-open'));}
+  window.addEventListener('scroll',f,{passive:true});f();
+  m.addEventListener('click',function(){var o=n.classList.toggle('is-open');m.setAttribute('aria-expanded',o);f();});
+  n.addEventListener('click',function(e){if(e.target.tagName==='A'){n.classList.remove('is-open');m.setAttribute('aria-expanded','false');f();}});
+})();
+</script>
 </body>
 </html>
